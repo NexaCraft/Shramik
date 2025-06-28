@@ -10,7 +10,7 @@ const Card = forwardRef(function Card({ className, ...props }, ref) {
     <div
       ref={ref}
       className={mergeClasses(
-        "rounded-lg border bg-card text-card-foreground shadow-sm",
+        "rounded-lg border border-gray-200 bg-white text-gray-900 shadow-sm",
         className
       )}
       {...props}
@@ -33,7 +33,7 @@ const CardTitle = forwardRef(function CardTitle({ className, ...props }, ref) {
     <h3
       ref={ref}
       className={mergeClasses(
-        "text-2xl font-semibold leading-none tracking-tight",
+        "text-2xl font-semibold leading-none tracking-tight text-gray-900",
         className
       )}
       {...props}
@@ -45,7 +45,7 @@ const CardDescription = forwardRef(function CardDescription({ className, ...prop
   return (
     <p
       ref={ref}
-      className={mergeClasses("text-sm text-muted-foreground", className)}
+      className={mergeClasses("text-sm text-gray-600", className)}
       {...props}
     />
   );

@@ -12,37 +12,37 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-50 border-t border-border">
+    <footer className="bg-slate-50 border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="bg-gradient-to-br from-primary to-accent p-2 rounded-lg">
+              <div className="bg-gradient-to-br from-orange-500 to-yellow-500 p-2 rounded-lg">
                 <Users className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-foreground">Shramik</h3>
-                <p className="text-sm text-muted-foreground">
+                <h3 className="text-lg font-bold text-gray-900">Shramik</h3>
+                <p className="text-sm text-gray-500">
                   Connecting Skills & Opportunities
                 </p>
               </div>
             </div>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-gray-600 text-sm">
               Empowering India's skilled workforce by connecting workers with
               local employers in the informal sector.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-muted-foreground hover:text-primary">
+              <a href="#" className="text-gray-500 hover:text-blue-600">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary">
+              <a href="#" className="text-gray-500 hover:text-blue-500">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary">
+              <a href="#" className="text-gray-500 hover:text-pink-600">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary">
+              <a href="#" className="text-gray-500 hover:text-blue-700">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
@@ -50,14 +50,14 @@ const Footer = () => {
 
           {/* For Workers */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">
+            <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
               For Workers
             </h4>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="/worker-signup"
-                  className="text-muted-foreground hover:text-foreground text-sm"
+                  className="text-gray-600 hover:text-gray-900 text-sm"
                 >
                   Get Started
                 </Link>
@@ -65,7 +65,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/find-jobs"
-                  className="text-muted-foreground hover:text-foreground text-sm"
+                  className="text-gray-600 hover:text-gray-900 text-sm"
                 >
                   Find Jobs
                 </Link>
@@ -73,7 +73,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/worker-guide"
-                  className="text-muted-foreground hover:text-foreground text-sm"
+                  className="text-gray-600 hover:text-gray-900 text-sm"
                 >
                   Worker Guide
                 </Link>
@@ -81,7 +81,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/safety"
-                  className="text-muted-foreground hover:text-foreground text-sm"
+                  className="text-gray-600 hover:text-gray-900 text-sm"
                 >
                   Safety Tips
                 </Link>
@@ -91,14 +91,14 @@ const Footer = () => {
 
           {/* For Employers */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">
+            <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
               For Employers
             </h4>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="/employer-signup"
-                  className="text-muted-foreground hover:text-foreground text-sm"
+                  className="text-gray-600 hover:text-gray-900 text-sm"
                 >
                   Get Started
                 </Link>
@@ -106,7 +106,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/post-job"
-                  className="text-muted-foreground hover:text-foreground text-sm"
+                  className="text-gray-600 hover:text-gray-900 text-sm"
                 >
                   Post a Job
                 </Link>
@@ -114,7 +114,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/pricing"
-                  className="text-muted-foreground hover:text-foreground text-sm"
+                  className="text-gray-600 hover:text-gray-900 text-sm"
                 >
                   Pricing
                 </Link>
@@ -122,7 +122,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/employer-guide"
-                  className="text-muted-foreground hover:text-foreground text-sm"
+                  className="text-gray-600 hover:text-gray-900 text-sm"
                 >
                   Employer Guide
                 </Link>
@@ -132,19 +132,19 @@ const Footer = () => {
 
           {/* Contact */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-foreground uppercase tracking-wide">
+            <h4 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
               Contact
             </h4>
             <ul className="space-y-2">
-              <li className="flex items-center space-x-2 text-muted-foreground text-sm">
+              <li className="flex items-center space-x-2 text-gray-600 text-sm">
                 <Mail className="h-4 w-4" />
                 <span>support@shramik.com</span>
               </li>
-              <li className="flex items-center space-x-2 text-muted-foreground text-sm">
+              <li className="flex items-center space-x-2 text-gray-600 text-sm">
                 <Phone className="h-4 w-4" />
                 <span>+91 9876543210</span>
               </li>
-              <li className="flex items-start space-x-2 text-muted-foreground text-sm">
+              <li className="flex items-start space-x-2 text-gray-600 text-sm">
                 <MapPin className="h-4 w-4 mt-0.5" />
                 <span>
                   Mumbai, Maharashtra
@@ -156,27 +156,27 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-border">
+        <div className="mt-8 pt-8 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-muted-foreground text-sm">
+            <p className="text-gray-600 text-sm">
               © 2024 Shramik. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link
                 to="/privacy"
-                className="text-muted-foreground hover:text-foreground text-sm"
+                className="text-gray-600 hover:text-gray-900 text-sm"
               >
                 Privacy Policy
               </Link>
               <Link
                 to="/terms"
-                className="text-muted-foreground hover:text-foreground text-sm"
+                className="text-gray-600 hover:text-gray-900 text-sm"
               >
                 Terms of Service
               </Link>
               <Link
                 to="/help"
-                className="text-muted-foreground hover:text-foreground text-sm"
+                className="text-gray-600 hover:text-gray-900 text-sm"
               >
                 Help Center
               </Link>
