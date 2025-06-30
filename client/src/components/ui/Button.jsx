@@ -4,7 +4,8 @@ const baseClasses =
 const variantClasses = {
   default: "bg-orange-600 text-white hover:bg-orange-700 focus:ring-orange-500",
   destructive: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
-  outline: "border border-gray-300 hover:bg-gray-100 text-gray-900 focus:ring-gray-500",
+  outline:
+    "border border-gray-300 hover:bg-gray-100 text-gray-900 focus:ring-gray-500",
   secondary: "bg-blue-100 text-blue-800 hover:bg-blue-200 focus:ring-blue-500",
   ghost: "hover:bg-gray-100 text-gray-900 focus:ring-gray-500",
   link: "text-orange-600 hover:underline focus:ring-orange-500",

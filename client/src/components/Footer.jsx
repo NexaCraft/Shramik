@@ -156,6 +156,7 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Copy Rights */}
         <div className="mt-8 pt-8 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 text-sm">

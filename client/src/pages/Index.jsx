@@ -166,18 +166,14 @@ const Index = () => {
               <div className="absolute -top-4 -right-4 bg-white rounded-lg shadow-lg p-4 border border-gray-200">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-orange-600">50K+</div>
-                  <div className="text-sm text-gray-600">
-                    Active Users
-                  </div>
+                  <div className="text-sm text-gray-600">Active Users</div>
                 </div>
               </div>
 
               <div className="absolute -bottom-4 -left-4 bg-white rounded-lg shadow-lg p-4 border border-gray-200">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-blue-600">1M+</div>
-                  <div className="text-sm text-gray-600">
-                    Jobs Completed
-                  </div>
+                  <div className="text-sm text-gray-600">Jobs Completed</div>
                 </div>
               </div>
             </div>
@@ -204,7 +200,7 @@ const Index = () => {
               return (
                 <Card
                   key={index}
-                  className="border-gray-200 hover:shadow-lg transition-shadow"
+                  className="border-gray-200 p-6 hover:shadow-lg transition-shadow"
                 >
                   <CardContent className="p-6 text-center space-y-4">
                     <div className="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto">
@@ -213,9 +209,7 @@ const Index = () => {
                     <h3 className="text-lg font-semibold text-gray-900">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-600">
-                      {feature.description}
-                    </p>
+                    <p className="text-gray-600">{feature.description}</p>
                   </CardContent>
                 </Card>
               );
@@ -224,8 +218,59 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Rest of the sections remain similar, replacing variable-based classes with direct Tailwind classes */}
-      
+      {/* Testimonials Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
+              Success Stories
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Real experiences from workers and employers who found success with
+              ShramSetu
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card
+                key={index}
+                className="border-gray-200 p-6 hover:shadow-lg transition-shadow"
+              >
+                <CardContent className="p-6 space-y-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-orange-100 rounded-full w-12 h-12 flex items-center justify-center">
+                      <span className="text-xl font-bold text-orange-600">
+                        {testimonial.name.charAt(0)}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">
+                        {testimonial.name}
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        {testimonial.role} • {testimonial.location}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 italic">
+                    "{testimonial.content}"
+                  </p>
+                  <div className="flex space-x-1">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-5 w-5 text-yellow-500 fill-current"
+                      />
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-orange-600 to-yellow-500">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">

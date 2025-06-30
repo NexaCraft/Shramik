@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 
 // Simple class name merger
 function mergeClasses(...classes) {
@@ -18,7 +18,10 @@ const Card = forwardRef(function Card({ className, ...props }, ref) {
   );
 });
 
-const CardHeader = forwardRef(function CardHeader({ className, ...props }, ref) {
+const CardHeader = forwardRef(function CardHeader(
+  { className, ...props },
+  ref
+) {
   return (
     <div
       ref={ref}
@@ -41,7 +44,10 @@ const CardTitle = forwardRef(function CardTitle({ className, ...props }, ref) {
   );
 });
 
-const CardDescription = forwardRef(function CardDescription({ className, ...props }, ref) {
+const CardDescription = forwardRef(function CardDescription(
+  { className, ...props },
+  ref
+) {
   return (
     <p
       ref={ref}
@@ -51,17 +57,19 @@ const CardDescription = forwardRef(function CardDescription({ className, ...prop
   );
 });
 
-const CardContent = forwardRef(function CardContent({ className, ...props }, ref) {
+const CardContent = forwardRef(function CardContent(
+  { className, ...props },
+  ref
+) {
   return (
-    <div
-      ref={ref}
-      className={mergeClasses("p-6 pt-0", className)}
-      {...props}
-    />
+    <div ref={ref} className={mergeClasses("p-6 pt-0", className)} {...props} />
   );
 });
 
-const CardFooter = forwardRef(function CardFooter({ className, ...props }, ref) {
+const CardFooter = forwardRef(function CardFooter(
+  { className, ...props },
+  ref
+) {
   return (
     <div
       ref={ref}
