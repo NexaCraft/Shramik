@@ -1,17 +1,4 @@
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Briefcase,
   Building2,
@@ -76,19 +63,19 @@ const EmployerSignup = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center space-y-4 mb-12">
           <div className="flex items-center justify-center space-x-2">
-            <div className="bg-gradient-to-br from-primary to-accent p-2 rounded-lg">
+            <div className="bg-gradient-to-br from-orange-500 to-yellow-500 p-2 rounded-lg">
               <Briefcase className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-foreground">
+            <h1 className="text-3xl font-bold text-gray-900">
               Join as an Employer
             </h1>
           </div>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Connect with skilled workers in your area. Post jobs, hire talent,
             and grow your business.
           </p>
@@ -98,23 +85,23 @@ const EmployerSignup = () => {
           {/* Benefits Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
-              <h3 className="text-xl font-semibold text-foreground">
+              <h3 className="text-xl font-semibold text-gray-900">
                 Why Choose ShramSetu?
               </h3>
 
               <div className="space-y-6">
                 {benefits.map((benefit, index) => {
-                  const IconComponent = benefit.icon;
+                  const Icon = benefit.icon;
                   return (
                     <div key={index} className="flex items-start space-x-3">
-                      <div className="bg-primary/10 rounded-lg p-2">
-                        <IconComponent className="h-5 w-5 text-primary" />
+                      <div className="bg-orange-100 rounded-lg p-2">
+                        <Icon className="h-5 w-5 text-orange-600" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-foreground text-sm">
+                        <h4 className="font-semibold text-gray-900 text-sm">
                           {benefit.title}
                         </h4>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-gray-600">
                           {benefit.description}
                         </p>
                       </div>
@@ -142,165 +129,238 @@ const EmployerSignup = () => {
 
           {/* Registration Form */}
           <div className="lg:col-span-2">
-            <Card className="border-border shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Building2 className="h-5 w-5 text-primary" />
-                  <span>Create Your Employer Account</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
+            <div className="bg-white border border-gray-200 shadow-lg rounded-lg overflow-hidden">
+              {/* Card Header */}
+              <div className="flex items-center space-x-2 bg-gray-100 px-6 py-4 border-b">
+                <Building2 className="h-5 w-5 text-orange-600" />
+                <h2 className="text-lg font-medium text-gray-900">
+                  Create Your Employer Account
+                </h2>
+              </div>
+
+              {/* Card Content */}
+              <form className="space-y-6 p-6">
                 {/* Contact Information */}
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-foreground border-b border-border pb-2">
+                <fieldset className="space-y-4">
+                  <legend className="text-sm font-medium text-gray-900 border-b border-gray-200 pb-2">
                     Contact Information
-                  </h4>
+                  </legend>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="contactName">Contact Person Name *</Label>
-                      <Input id="contactName" placeholder="Your full name" />
+                      <label
+                        htmlFor="contactName"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Contact Person Name *
+                      </label>
+                      <input
+                        id="contactName"
+                        name="contactName"
+                        required
+                        type="text"
+                        placeholder="Your full name"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="phone">Phone Number *</Label>
+                      <label
+                        htmlFor="phone"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Phone Number *
+                      </label>
                       <div className="flex">
-                        <span className="flex items-center px-3 bg-muted border border-r-0 border-input rounded-l-md text-muted-foreground">
+                        <span className="flex items-center px-3 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md text-gray-700">
                           +91
                         </span>
-                        <Input
+                        <input
                           id="phone"
+                          name="phone"
+                          required
+                          type="tel"
                           placeholder="9876543210"
-                          className="rounded-l-none"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                         />
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Email Address *
+                    </label>
+                    <input
                       id="email"
+                      name="email"
+                      required
                       type="email"
                       placeholder="your@email.com"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                     />
                   </div>
-                </div>
+                </fieldset>
 
                 {/* Business Information */}
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-foreground border-b border-border pb-2">
+                <fieldset className="space-y-4">
+                  <legend className="text-sm font-medium text-gray-900 border-b border-gray-200 pb-2">
                     Business Information
-                  </h4>
+                  </legend>
 
                   <div className="space-y-2">
-                    <Label htmlFor="businessName">
+                    <label
+                      htmlFor="businessName"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Business/Company Name *
-                    </Label>
-                    <Input
+                    </label>
+                    <input
                       id="businessName"
+                      name="businessName"
+                      required
+                      type="text"
                       placeholder="Enter your business name"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="businessType">Business Type *</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select business type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {businessTypes.map((type) => (
-                            <SelectItem
-                              key={type}
-                              value={type.toLowerCase().replace(/\s+/g, "-")}
-                            >
-                              {type}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <label
+                        htmlFor="businessType"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Business Type *
+                      </label>
+                      <select
+                        id="businessType"
+                        name="businessType"
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      >
+                        <option value="">Select business type</option>
+                        {businessTypes.map((type) => (
+                          <option key={type} value={type}>
+                            {type}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="teamSize">Team Size</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select team size" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1-5">1-5 employees</SelectItem>
-                          <SelectItem value="6-20">6-20 employees</SelectItem>
-                          <SelectItem value="21-50">21-50 employees</SelectItem>
-                          <SelectItem value="51-100">
-                            51-100 employees
-                          </SelectItem>
-                          <SelectItem value="100+">100+ employees</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <label
+                        htmlFor="teamSize"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Team Size
+                      </label>
+                      <select
+                        id="teamSize"
+                        name="teamSize"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      >
+                        <option value="">Select team size</option>
+                        <option value="1-5">1-5 employees</option>
+                        <option value="6-20">6-20 employees</option>
+                        <option value="21-50">21-50 employees</option>
+                        <option value="51-100">51-100 employees</option>
+                        <option value="100+">100+ employees</option>
+                      </select>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="businessDescription">
+                    <label
+                      htmlFor="businessDescription"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       Business Description (Optional)
-                    </Label>
-                    <Textarea
+                    </label>
+                    <textarea
                       id="businessDescription"
+                      name="businessDescription"
+                      rows={4}
                       placeholder="Briefly describe your business and the type of work you typically need help with..."
-                      className="min-h-[80px]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                     />
                   </div>
-                </div>
+                </fieldset>
 
                 {/* Location Information */}
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-foreground border-b border-border pb-2">
+                <fieldset className="space-y-4">
+                  <legend className="text-sm font-medium text-gray-900 border-b border-gray-200 pb-2">
                     Location Information
-                  </h4>
+                  </legend>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="city">City *</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select your city" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {cities.map((city) => (
-                            <SelectItem key={city} value={city.toLowerCase()}>
-                              {city}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <label
+                        htmlFor="city"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        City *
+                      </label>
+                      <select
+                        id="city"
+                        name="city"
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      >
+                        <option value="">Select your city</option>
+                        {cities.map((city) => (
+                          <option key={city} value={city}>
+                            {city}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="area">Area/Locality *</Label>
-                      <Input
+                      <label
+                        htmlFor="area"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Area/Locality *
+                      </label>
+                      <input
                         id="area"
+                        name="area"
+                        required
+                        type="text"
                         placeholder="e.g., Andheri West, Koramangala"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="address">Full Address</Label>
-                    <Textarea
+                    <label
+                      htmlFor="address"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Full Address
+                    </label>
+                    <textarea
                       id="address"
+                      name="address"
+                      rows={3}
                       placeholder="Enter your complete business address..."
-                      className="min-h-[60px]"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
                     />
                   </div>
-                </div>
+                </fieldset>
 
                 {/* Hiring Needs */}
-                <div className="space-y-4">
-                  <h4 className="font-semibold text-foreground border-b border-border pb-2">
+                <fieldset className="space-y-4">
+                  <legend className="text-sm font-medium text-gray-900 border-b border-gray-200 pb-2">
                     Hiring Needs
-                  </h4>
+                  </legend>
 
                   <div className="space-y-2">
-                    <Label>What type of workers do you typically need? *</Label>
+                    <span className="text-sm font-medium text-gray-700">
+                      What type of workers do you typically need? *
+                    </span>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                       {[
                         "Construction Workers",
@@ -314,108 +374,115 @@ const EmployerSignup = () => {
                         "Carpenters",
                         "General Labor",
                       ].map((worker) => (
-                        <div
+                        <label
                           key={worker}
-                          className="flex items-center space-x-2"
+                          className="inline-flex items-center space-x-2"
                         >
-                          <Checkbox id={worker} />
-                          <Label
-                            htmlFor={worker}
-                            className="text-sm font-normal cursor-pointer"
-                          >
+                          <input
+                            type="checkbox"
+                            name="workers"
+                            value={worker}
+                            className="h-4 w-4 text-orange-600 border-gray-300 rounded"
+                          />
+                          <span className="text-sm text-gray-700">
                             {worker}
-                          </Label>
-                        </div>
+                          </span>
+                        </label>
                       ))}
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="hiringFrequency">
+                    <label
+                      htmlFor="hiringFrequency"
+                      className="block text-sm font-medium text-gray-700"
+                    >
                       How often do you hire? *
-                    </Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select hiring frequency" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="daily">Daily</SelectItem>
-                        <SelectItem value="weekly">Weekly</SelectItem>
-                        <SelectItem value="monthly">Monthly</SelectItem>
-                        <SelectItem value="project-based">
-                          Project-based
-                        </SelectItem>
-                        <SelectItem value="as-needed">As needed</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    </label>
+                    <select
+                      id="hiringFrequency"
+                      name="hiringFrequency"
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    >
+                      <option value="">Select hiring frequency</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="project-based">Project-based</option>
+                      <option value="as-needed">As needed</option>
+                    </select>
                   </div>
-                </div>
+                </fieldset>
 
                 {/* Terms and Submit */}
                 <div className="space-y-4">
-                  <div className="flex items-start space-x-2">
-                    <Checkbox id="terms" />
-                    <Label htmlFor="terms" className="text-sm leading-relaxed">
+                  <label className="inline-flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      name="terms"
+                      className="h-4 w-4 text-orange-600 border-gray-300 rounded"
+                      required
+                    />
+                    <span className="text-sm text-gray-700 leading-relaxed">
                       I agree to ShramSetu's{" "}
                       <Link
                         to="/terms"
-                        className="text-primary hover:underline"
+                        className="text-orange-600 hover:underline"
                       >
                         Terms of Service
                       </Link>{" "}
                       and{" "}
                       <Link
                         to="/privacy"
-                        className="text-primary hover:underline"
+                        className="text-orange-600 hover:underline"
                       >
                         Privacy Policy
                       </Link>
-                      . I understand that I can post jobs for free and will only
-                      be charged when I hire workers.
-                    </Label>
-                  </div>
+                      .
+                    </span>
+                  </label>
 
-                  <Button
-                    className="w-full bg-primary hover:bg-primary/90"
-                    size="lg"
+                  <button
+                    type="submit"
+                    className="w-full inline-flex items-center justify-center px-6 py-3 bg-orange-600 text-white text-lg font-medium rounded-md hover:bg-orange-700 transition-colors cursor-pointer"
                   >
                     Create Employer Account
                     <CheckCircle className="h-5 w-5 ml-2" />
-                  </Button>
+                  </button>
                 </div>
 
                 {/* Back to Home */}
-                <div className="text-center pt-4 border-t border-border">
+                <div className="text-center pt-4 border-t border-gray-200">
                   <Link to="/">
-                    <Button variant="outline">
+                    <button
+                      type="button"
+                      className="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100 transition-colors cursor-pointer"
+                    >
                       <ArrowLeft className="h-4 w-4 mr-2" />
                       Back to Home
-                    </Button>
+                    </button>
                   </Link>
                 </div>
-              </CardContent>
-            </Card>
+              </form>
+            </div>
 
             {/* Contact Info */}
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center p-4 bg-muted/30 rounded-lg">
-                <Phone className="h-6 w-6 mx-auto mb-2 text-primary" />
+              <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+                <Phone className="h-6 w-6 mx-auto mb-2 text-orange-600" />
                 <p className="font-semibold text-sm">Call Support</p>
-                <p className="text-sm text-muted-foreground">+91 98765 43210</p>
+                <p className="text-sm text-gray-600">+91 98765 43210</p>
               </div>
-              <div className="text-center p-4 bg-muted/30 rounded-lg">
-                <Mail className="h-6 w-6 mx-auto mb-2 text-primary" />
+              <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+                <Mail className="h-6 w-6 mx-auto mb-2 text-orange-600" />
                 <p className="font-semibold text-sm">Email Us</p>
-                <p className="text-sm text-muted-foreground">
-                  support@shramsetu.com
-                </p>
+                <p className="text-sm text-gray-600">support@shramsetu.com</p>
               </div>
-              <div className="text-center p-4 bg-muted/30 rounded-lg">
-                <MapPin className="h-6 w-6 mx-auto mb-2 text-primary" />
+              <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+                <MapPin className="h-6 w-6 mx-auto mb-2 text-orange-600" />
                 <p className="font-semibold text-sm">Visit Office</p>
-                <p className="text-sm text-muted-foreground">
-                  Mumbai, Maharashtra
-                </p>
+                <p className="text-sm text-gray-600">Mumbai, Maharashtra</p>
               </div>
             </div>
           </div>

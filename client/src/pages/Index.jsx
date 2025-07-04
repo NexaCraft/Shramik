@@ -87,14 +87,15 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
-                <Badge className="bg-orange-100 text-orange-600 hover:bg-orange-200">
+                <span className="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-sm font-medium hover:bg-orange-200 transition-colors">
                   Empowering India's Workforce
-                </Badge>
+                </span>
+
                 <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
                   Connect <span className="text-orange-600">Skilled Hands</span>{" "}
-                  with
-                  <span className="text-blue-600"> Local Demand</span>
+                  with <span className="text-blue-600">Local Demand</span>
                 </h1>
+
                 <p className="text-xl text-gray-600 leading-relaxed">
                   India's first platform dedicated to connecting skilled workers
                   with employers in the informal sector. Find work, hire talent,
@@ -104,22 +105,16 @@ const Index = () => {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/worker-signup">
-                  <Button
-                    size="lg"
-                    className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700"
-                  >
+                  <button className="w-full sm:w-auto inline-flex items-center px-6 py-3 bg-blue-600 text-white text-lg font-medium rounded-md hover:bg-blue-700 transition-colors cursor-pointer">
                     <Users className="h-5 w-5 mr-2" />
                     I'm Looking for Work
-                  </Button>
+                  </button>
                 </Link>
+
                 <Link to="/employer-signup">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full sm:w-auto border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white"
-                  >
+                  <button className="w-full sm:w-auto inline-flex items-center px-6 py-3 border border-orange-600 text-orange-600 text-lg font-medium rounded-md hover:bg-orange-600 hover:text-white transition-colors cursor-pointer">
                     <Briefcase className="h-5 w-5 mr-2" />I Need Workers
-                  </Button>
+                  </button>
                 </Link>
               </div>
 
@@ -283,24 +278,16 @@ const Index = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/worker-signup">
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-white text-orange-600 hover:bg-white/90 border-white"
-              >
+              <button className="inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-orange-600 bg-white border border-white rounded-md hover:bg-orange-100 transition-colors cursor-pointer">
                 <Users className="h-5 w-5 mr-2" />
                 Find Work Today
-              </Button>
+              </button>
             </Link>
             <Link to="/employer-signup">
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-white text-orange-600 hover:bg-white/90 border-white"
-              >
+              <button className="inline-flex items-center justify-center px-6 py-3 text-lg font-semibold text-orange-600 bg-white border border-white rounded-md hover:bg-orange-100 transition-colors cursor-pointer">
                 <Briefcase className="h-5 w-5 mr-2" />
                 Hire Workers Now
-              </Button>
+              </button>
             </Link>
           </div>
         </div>

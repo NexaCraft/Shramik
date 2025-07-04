@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Menu, X, Users, Briefcase } from "lucide-react";
 
 const Navbar = () => {
@@ -50,19 +49,16 @@ const Navbar = () => {
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/worker-signup">
-              <Button
-                variant="outline"
-                className="border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
-              >
+              <button className="flex items-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors cursor-pointer">
                 <Users className="h-4 w-4 mr-2" />
                 Find Work
-              </Button>
+              </button>
             </Link>
             <Link to="/employer-signup">
-              <Button className="bg-orange-500 hover:bg-orange-600">
+              <button className="flex items-center px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors cursor-pointer">
                 <Briefcase className="h-4 w-4 mr-2" />
                 Hire Workers
-              </Button>
+              </button>
             </Link>
           </div>
 
@@ -87,43 +83,40 @@ const Navbar = () => {
             <div className="flex flex-col space-y-4">
               <Link
                 to="/how-it-works"
-                className="text-gray-500 hover:text-gray-900 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
+                className="text-gray-500 hover:text-gray-900"
               >
                 How it Works
               </Link>
               <Link
                 to="/about"
-                className="text-gray-500 hover:text-gray-900 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
+                className="text-gray-500 hover:text-gray-900"
               >
                 About
               </Link>
               <Link
                 to="/contact"
-                className="text-gray-500 hover:text-gray-900 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
+                className="text-gray-500 hover:text-gray-900"
               >
                 Contact
               </Link>
               <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200">
                 <Link to="/worker-signup" onClick={() => setIsMenuOpen(false)}>
-                  <Button
-                    variant="outline"
-                    className="w-full border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
-                  >
+                  <button className="w-full flex items-center justify-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors">
                     <Users className="h-4 w-4 mr-2" />
                     Find Work
-                  </Button>
+                  </button>
                 </Link>
                 <Link
                   to="/employer-signup"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                  <button className="w-full flex items-center justify-center px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors">
                     <Briefcase className="h-4 w-4 mr-2" />
                     Hire Workers
-                  </Button>
+                  </button>
                 </Link>
               </div>
             </div>
