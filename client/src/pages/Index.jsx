@@ -1,7 +1,4 @@
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   Users,
   Briefcase,
@@ -10,7 +7,6 @@ import {
   Shield,
   Clock,
   CheckCircle,
-  ArrowRight,
   Hammer,
   Wrench,
   Paintbrush,
@@ -58,7 +54,7 @@ const Index = () => {
       role: "Carpenter",
       location: "Delhi",
       content:
-        "ShramSetu helped me find consistent work. I now have regular clients and my income has doubled!",
+        "Shramik helped me find consistent work. I now have regular clients and my income has doubled!",
       rating: 5,
     },
     {
@@ -181,8 +177,9 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-              Why Choose ShramSetu?
+              Why Choose Shramik?
             </h2>
+
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               We've built the most comprehensive platform for India's informal
               workforce, designed with local needs in mind.
@@ -193,20 +190,18 @@ const Index = () => {
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
-                <Card
+                <div
                   key={index}
-                  className="border-gray-200 p-6 hover:shadow-lg transition-shadow"
+                  className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center"
                 >
-                  <CardContent className="p-6 text-center space-y-4">
-                    <div className="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto">
-                      <IconComponent className="h-8 w-8 text-orange-600" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-600">{feature.description}</p>
-                  </CardContent>
-                </Card>
+                  <div className="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <IconComponent className="h-8 w-8 text-orange-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm">{feature.description}</p>
+                </div>
               );
             })}
           </div>
@@ -220,47 +215,50 @@ const Index = () => {
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
               Success Stories
             </h2>
+
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Real experiences from workers and employers who found success with
-              ShramSetu
+              Shramik
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card
+              <div
                 key={index}
-                className="border-gray-200 p-6 hover:shadow-lg transition-shadow"
+                className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6"
               >
-                <CardContent className="p-6 space-y-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="bg-orange-100 rounded-full w-12 h-12 flex items-center justify-center">
-                      <span className="text-xl font-bold text-orange-600">
-                        {testimonial.name.charAt(0)}
-                      </span>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900">
-                        {testimonial.name}
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        {testimonial.role} • {testimonial.location}
-                      </p>
-                    </div>
+                <div className="flex items-center space-x-4 mb-4">
+                  <div className="bg-orange-100 rounded-full w-12 h-12 flex items-center justify-center">
+                    <span className="text-xl font-bold text-orange-600">
+                      {testimonial.name.charAt(0)}
+                    </span>
                   </div>
-                  <p className="text-gray-700 italic">
-                    "{testimonial.content}"
-                  </p>
-                  <div className="flex space-x-1">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-5 w-5 text-yellow-500 fill-current"
-                      />
-                    ))}
+
+                  <div>
+                    <h3 className="font-semibold text-gray-900">
+                      {testimonial.name}
+                    </h3>
+
+                    <p className="text-sm text-gray-600">
+                      {testimonial.role} • {testimonial.location}
+                    </p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+
+                <p className="text-gray-700 italic mb-4">
+                  "{testimonial.content}"
+                </p>
+
+                <div className="flex space-x-1">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="h-5 w-5 text-yellow-500 fill-current"
+                    />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -273,8 +271,8 @@ const Index = () => {
             Ready to Transform Your Work Life?
           </h2>
           <p className="text-xl text-white/90">
-            Join thousands of workers and employers who trust ShramSetu for
-            their daily needs
+            Join thousands of workers and employers who trust Shramik for their
+            daily needs
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/worker-signup">

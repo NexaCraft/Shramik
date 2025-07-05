@@ -63,65 +63,74 @@ const EmployerSignup = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
-        <div className="text-center space-y-4 mb-12">
-          <div className="flex items-center justify-center space-x-2">
-            <div className="bg-gradient-to-br from-orange-500 to-yellow-500 p-2 rounded-lg">
-              <Briefcase className="h-6 w-6 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Refined Header */}
+        <div className="text-center space-y-6 mb-16">
+          <div className="inline-flex items-center space-x-4 bg-white shadow-md rounded-full px-6 py-3">
+            <div className="bg-gradient-to-br from-orange-500 to-yellow-500 p-3 rounded-full shadow-lg">
+              <Briefcase className="h-7 w-7 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900">
+
+            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-pink-600">
               Join as an Employer
             </h1>
           </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Connect with skilled workers in your area. Post jobs, hire talent,
-            and grow your business.
+            and grow your business with ease.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Benefits Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
-              <h3 className="text-xl font-semibold text-gray-900">
-                Why Choose ShramSetu?
-              </h3>
+            <div className="sticky top-24 space-y-8">
+              <div className="bg-white rounded-xl shadow-xl p-6">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6 border-b pb-3">
+                  Why Choose Shramik?
+                </h3>
 
-              <div className="space-y-6">
-                {benefits.map((benefit, index) => {
-                  const Icon = benefit.icon;
-                  return (
-                    <div key={index} className="flex items-start space-x-3">
-                      <div className="bg-orange-100 rounded-lg p-2">
-                        <Icon className="h-5 w-5 text-orange-600" />
+                <div className="space-y-6">
+                  {benefits.map((benefit, index) => {
+                    const Icon = benefit.icon;
+
+                    return (
+                      <div
+                        key={index}
+                        className="flex items-center space-x-4 bg-gray-50 p-4 rounded-lg hover:shadow-md transition-all"
+                      >
+                        <div className="bg-orange-100 rounded-full p-3">
+                          <Icon className="h-6 w-6 text-orange-600" />
+                        </div>
+
+                        <div>
+                          <h4 className="font-bold text-gray-900 text-base">
+                            {benefit.title}
+                          </h4>
+
+                          <p className="text-sm text-gray-600">
+                            {benefit.description}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-900 text-sm">
-                          {benefit.title}
-                        </h4>
-                        <p className="text-sm text-gray-600">
-                          {benefit.description}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
 
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                  <div>
-                    <h4 className="font-semibold text-green-800 text-sm">
-                      Free to Get Started
-                    </h4>
-                    <p className="text-sm text-green-700">
-                      Create your account and post your first job for free. Pay
-                      only when you hire.
-                    </p>
-                  </div>
+              <div className="bg-green-50 border-2 border-green-200 rounded-xl p-6 flex items-start space-x-4">
+                <CheckCircle className="h-7 w-7 text-green-500 mt-1 flex-shrink-0" />
+                <div>
+                  <h4 className="font-bold text-green-800 text-base">
+                    Free to Get Started
+                  </h4>
+
+                  <p className="text-sm text-green-700 leading-relaxed">
+                    Create your account and post your first job for free. Pay
+                    only when you hire real talent.
+                  </p>
                 </div>
               </div>
             </div>
@@ -129,16 +138,18 @@ const EmployerSignup = () => {
 
           {/* Registration Form */}
           <div className="lg:col-span-2">
-            <div className="bg-white border border-gray-200 shadow-lg rounded-lg overflow-hidden">
-              {/* Card Header */}
-              <div className="flex items-center space-x-2 bg-gray-100 px-6 py-4 border-b">
-                <Building2 className="h-5 w-5 text-orange-600" />
-                <h2 className="text-lg font-medium text-gray-900">
-                  Create Your Employer Account
-                </h2>
+            <div className="bg-white border border-gray-200 shadow-2xl rounded-2xl overflow-hidden">
+              {/* Form Header */}
+              <div className="flex items-center justify-between bg-gradient-to-r from-orange-100 to-pink-100 px-6 py-5 border-b">
+                <div className="flex items-center space-x-4">
+                  <Building2 className="h-6 w-6 text-orange-600" />
+                  <h2 className="text-xl font-bold text-gray-900">
+                    Create Your Employer Account
+                  </h2>
+                </div>
               </div>
 
-              {/* Card Content */}
+              {/* Form Content */}
               <form className="space-y-6 p-6">
                 {/* Contact Information */}
                 <fieldset className="space-y-4">
@@ -425,7 +436,7 @@ const EmployerSignup = () => {
                       required
                     />
                     <span className="text-sm text-gray-700 leading-relaxed">
-                      I agree to ShramSetu's{" "}
+                      I agree to Shramik's{" "}
                       <Link
                         to="/terms"
                         className="text-orange-600 hover:underline"
@@ -468,22 +479,53 @@ const EmployerSignup = () => {
             </div>
 
             {/* Contact Info */}
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                <Phone className="h-6 w-6 mx-auto mb-2 text-orange-600" />
-                <p className="font-semibold text-sm">Call Support</p>
-                <p className="text-sm text-gray-600">+91 98765 43210</p>
-              </div>
-              <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                <Mail className="h-6 w-6 mx-auto mb-2 text-orange-600" />
-                <p className="font-semibold text-sm">Email Us</p>
-                <p className="text-sm text-gray-600">support@shramsetu.com</p>
-              </div>
-              <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                <MapPin className="h-6 w-6 mx-auto mb-2 text-orange-600" />
-                <p className="font-semibold text-sm">Visit Office</p>
-                <p className="text-sm text-gray-600">Mumbai, Maharashtra</p>
-              </div>
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: Phone,
+
+                  title: "Call Support",
+
+                  detail: "+91 98765 43210",
+
+                  color: "text-orange-600",
+                },
+
+                {
+                  icon: Mail,
+
+                  title: "Email Us",
+
+                  detail: "support@Shramik.com",
+
+                  color: "text-blue-600",
+                },
+
+                {
+                  icon: MapPin,
+
+                  title: "Visit Office",
+
+                  detail: "Mumbai, Maharashtra",
+
+                  color: "text-green-600",
+                },
+              ].map((contact, index) => (
+                <div
+                  key={index}
+                  className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                >
+                  <contact.icon
+                    className={`h-8 w-8 mx-auto mb-4 ${contact.color}`}
+                  />
+
+                  <p className="font-bold text-base text-gray-800 mb-2">
+                    {contact.title}
+                  </p>
+
+                  <p className="text-sm text-gray-600">{contact.detail}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

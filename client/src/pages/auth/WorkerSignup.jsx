@@ -1,513 +1,498 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
-import {
-  Users,
-  CheckCircle,
-  Upload,
-  Phone,
-  ArrowLeft,
-  ArrowRight,
-  Star,
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { Users, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react";
 
 const WorkerSignup = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [selectedSkills, setSelectedSkills] = useState([]);
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    phone: "",
+    email: "",
+    age: "",
+    gender: "",
+    city: "",
+    skills: [],
+    experience: "",
+    workPreference: "",
+  });
 
-  const skills = [
-    "Carpentry",
-    "Plumbing",
-    "Electrical Work",
-    "Painting",
-    "Masonry",
-    "Welding",
-    "Roofing",
-    "Flooring",
-    "Gardening",
-    "Cleaning",
-    "Driver",
-    "Cook",
-    "Security Guard",
-    "Delivery",
-    "Moving/Packing",
-  ];
+  const [errors, setErrors] = useState({});
+  const [isStepValid, setIsStepValid] = useState(false);
 
-  const cities = [
-    "Mumbai",
-    "Delhi",
-    "Bangalore",
-    "Chennai",
-    "Kolkata",
-    "Hyderabad",
-    "Pune",
-    "Ahmedabad",
-    "Surat",
-    "Jaipur",
-  ];
+  // Validation Logic
+  const validateStep = () => {
+    const newErrors = {};
+    let stepIsValid = true;
 
-  const handleSkillToggle = (skill) => {
-    setSelectedSkills((prev) =>
-      prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
-    );
+    switch (step) {
+      case 1:
+        if (!formData.fullName || formData.fullName.trim().length < 2) {
+          newErrors.fullName = "Full name is required (min 2 characters)";
+          stepIsValid = false;
+        }
+
+        if (!formData.phone || !/^\d{10}$/.test(formData.phone)) {
+          newErrors.phone = "Valid 10-digit phone number is required";
+          stepIsValid = false;
+        }
+
+        if (
+          !formData.age ||
+          parseInt(formData.age) < 18 ||
+          parseInt(formData.age) > 65
+        ) {
+          newErrors.age = "Age must be between 18 and 65";
+          stepIsValid = false;
+        }
+
+        if (!formData.gender) {
+          newErrors.gender = "Gender is required";
+          stepIsValid = false;
+        }
+        break;
+
+      case 2:
+        if (formData.skills.length === 0) {
+          newErrors.skills = "Select at least one skill";
+          stepIsValid = false;
+        }
+
+        if (!formData.experience) {
+          newErrors.experience = "Experience level is required";
+          stepIsValid = false;
+        }
+        break;
+
+      case 3:
+        if (!formData.city) {
+          newErrors.city = "City is required";
+          stepIsValid = false;
+        }
+
+        if (!formData.workPreference) {
+          newErrors.workPreference = "Work preference is required";
+          stepIsValid = false;
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    setErrors(newErrors);
+    setIsStepValid(stepIsValid);
+    return stepIsValid;
   };
 
-  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 4));
-  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
+  // Validate step on form data change
+  useEffect(() => {
+    validateStep();
+  }, [formData, step]);
+
+  // Handle Input Changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Skill Toggle
+  const toggleSkill = (skill) => {
+    setFormData((prev) => ({
+      ...prev,
+      skills: prev.skills.includes(skill)
+        ? prev.skills.filter((s) => s !== skill)
+        : [...prev.skills, skill],
+    }));
+  };
+
+  // Navigation Methods
+  const nextStep = () => {
+    if (validateStep()) {
+      setStep((prev) => Math.min(prev + 1, 4));
+    }
+  };
+
+  const prevStep = () => {
+    setStep((prev) => Math.max(prev - 1, 1));
+  };
+
+  // Form Submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateStep()) {
+      // Submit form data
+      console.log("Form Submitted:", formData);
+      // Add your submission logic here
+      alert("Profile created successfully!");
+    }
+  };
+
+  // Render Step-Specific Content
+  const renderStepContent = () => {
+    switch (step) {
+      case 1:
+        return (
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-center text-gray-800">
+              Personal Information
+            </h2>
+
+            {/* Full Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Full Name *
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className={`mt-1 block w-full border rounded-md shadow-sm py-2 px-3 
+                  ${
+                    errors.fullName
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-blue-500"
+                  }`}
+              />
+              {errors.fullName && (
+                <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+              )}
+            </div>
+
+            {/* Phone Number */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Phone Number *
+              </label>
+              <div className="flex">
+                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500">
+                  +91
+                </span>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className={`flex-1 block w-full border rounded-r-md shadow-sm py-2 px-3
+                    ${
+                      errors.phone
+                        ? "border-red-500 focus:ring-red-500"
+                        : "border-gray-300 focus:ring-blue-500"
+                    }`}
+                />
+              </div>
+              {errors.phone && (
+                <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
+              )}
+            </div>
+
+            {/* Age */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Age *
+              </label>
+              <input
+                type="number"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+                min="18"
+                max="65"
+                className={`mt-1 block w-full border rounded-md shadow-sm py-2 px-3
+                  ${
+                    errors.age
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-blue-500"
+                  }`}
+              />
+              {errors.age && (
+                <p className="text-red-500 text-xs mt-1">{errors.age}</p>
+              )}
+            </div>
+
+            {/* Gender */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Gender *
+              </label>
+              <select
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                className={`mt-1 block w-full border rounded-md shadow-sm py-2 px-3
+                  ${
+                    errors.gender
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-blue-500"
+                  }`}
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+              {errors.gender && (
+                <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
+              )}
+            </div>
+          </div>
+        );
+
+      case 2:
+        return (
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-center text-gray-800">
+              Skills & Experience
+            </h2>
+
+            {/* Skills Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Select Skills *
+              </label>
+              <div className="grid grid-cols-3 gap-2 mt-2">
+                {[
+                  "Carpentry",
+                  "Plumbing",
+                  "Electrical",
+                  "Painting",
+                  "Welding",
+                  "Masonry",
+                ].map((skill) => (
+                  <div key={skill} className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id={skill}
+                      checked={formData.skills.includes(skill)}
+                      onChange={() => toggleSkill(skill)}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                    <label
+                      htmlFor={skill}
+                      className="ml-2 block text-sm text-gray-700"
+                    >
+                      {skill}
+                    </label>
+                  </div>
+                ))}
+              </div>
+              {errors.skills && (
+                <p className="text-red-500 text-xs mt-1">{errors.skills}</p>
+              )}
+            </div>
+
+            {/* Experience */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Experience Level *
+              </label>
+              <select
+                name="experience"
+                value={formData.experience}
+                onChange={handleChange}
+                className={`mt-1 block w-full border rounded-md shadow-sm py-2 px-3
+                  ${
+                    errors.experience
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-blue-500"
+                  }`}
+              >
+                <option value="">Select Experience</option>
+                <option value="fresher">Fresher (0-1 years)</option>
+                <option value="1-3">1-3 years</option>
+                <option value="3-5">3-5 years</option>
+                <option value="5+">5+ years</option>
+              </select>
+              {errors.experience && (
+                <p className="text-red-500 text-xs mt-1">{errors.experience}</p>
+              )}
+            </div>
+          </div>
+        );
+
+      case 3:
+        return (
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-center text-gray-800">
+              Location & Availability
+            </h2>
+
+            {/* City */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                City *
+              </label>
+              <select
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                className={`mt-1 block w-full border rounded-md shadow-sm py-2 px-3
+                  ${
+                    errors.city
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-blue-500"
+                  }`}
+              >
+                <option value="">Select City</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Bangalore">Bangalore</option>
+                {/* Add more cities */}
+              </select>
+              {errors.city && (
+                <p className="text-red-500 text-xs mt-1">{errors.city}</p>
+              )}
+            </div>
+
+            {/* Work Preference */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Work Preference *
+              </label>
+              <select
+                name="workPreference"
+                value={formData.workPreference}
+                onChange={handleChange}
+                className={`mt-1 block w-full border rounded-md shadow-sm py-2 px-3
+                  ${
+                    errors.workPreference
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-blue-500"
+                  }`}
+              >
+                <option value="">Select Work Preference</option>
+                <option value="full-time">Full-time</option>
+                <option value="part-time">Part-time</option>
+                <option value="contract">Contract</option>
+                <option value="freelance">Freelance</option>
+              </select>
+              {errors.workPreference && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.workPreference}
+                </p>
+              )}
+            </div>
+          </div>
+        );
+
+      case 4:
+        return (
+          <div className="space-y-6 text-center">
+            <CheckCircle className="mx-auto h-16 w-16 text-green-500" />
+            <h2 className="text-2xl font-bold text-gray-800">Almost There!</h2>
+            <p className="text-gray-600">
+              Review your details and submit your profile
+            </p>
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <p>
+                <strong>Name:</strong> {formData.fullName}
+              </p>
+              <p>
+                <strong>Phone:</strong> {formData.phone}
+              </p>
+              <p>
+                <strong>Skills:</strong> {formData.skills.join(", ")}
+              </p>
+              <p>
+                <strong>City:</strong> {formData.city}
+              </p>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
         {/* Header */}
-        <div className="text-center space-y-4 mb-12">
-          <div className="flex items-center justify-center space-x-2">
-            <div className="bg-gradient-to-br from-secondary to-secondary/80 p-2 rounded-lg">
-              <Users className="h-6 w-6 text-white" />
+        <div className="text-center">
+          <div className="flex items-center justify-center space-x-4 mb-4">
+            <div className="bg-gradient-to-r from-orange-500 to-pink-500 p-3 rounded-full">
+              <Users className="h-8 w-8 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-foreground">
-              Join as a Worker
+            <h1 className="text-3xl font-extrabold text-gray-900">
+              Worker Registration
             </h1>
           </div>
-          <p className="text-lg text-muted-foreground">
-            Create your profile and start finding work opportunities in your
-            area
-          </p>
         </div>
 
-        {/* Progress Steps */}
-        <div className="flex items-center justify-center space-x-4 mb-12">
-          {[1, 2, 3, 4].map((step) => (
-            <div key={step} className="flex items-center">
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
-                  step <= currentStep
-                    ? "bg-secondary text-white"
-                    : "bg-muted text-muted-foreground"
-                }`}
-              >
-                {step < currentStep ? (
-                  <CheckCircle className="h-5 w-5" />
-                ) : (
-                  step
-                )}
-              </div>
-              {step < 4 && (
-                <div
-                  className={`w-16 h-1 mx-2 ${
-                    step < currentStep ? "bg-secondary" : "bg-muted"
-                  }`}
-                />
-              )}
+        {/* Progress Indicator */}
+        <div className="flex justify-center space-x-4 mb-8">
+          {[1, 2, 3, 4].map((num) => (
+            <div
+              key={num}
+              className={`
+                w-10 h-10 rounded-full flex items-center justify-center 
+                ${
+                  step >= num
+                    ? "bg-orange-500 text-white"
+                    : "bg-gray-200 text-gray-500"
+                }
+              `}
+            >
+              {step > num ? <CheckCircle /> : num}
             </div>
           ))}
         </div>
 
-        <Card className="border-border shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-center">
-              {currentStep === 1 && "Basic Information"}
-              {currentStep === 2 && "Skills & Experience"}
-              {currentStep === 3 && "Location & Availability"}
-              {currentStep === 4 && "Verification & Documents"}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Step 1: Basic Information */}
-            {currentStep === 1 && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="fullName">Full Name *</Label>
-                    <Input id="fullName" placeholder="Enter your full name" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number *</Label>
-                    <div className="flex">
-                      <span className="flex items-center px-3 bg-muted border border-r-0 border-input rounded-l-md text-muted-foreground">
-                        +91
-                      </span>
-                      <Input
-                        id="phone"
-                        placeholder="9876543210"
-                        className="rounded-l-none"
-                      />
-                    </div>
-                  </div>
-                </div>
+        {/* Form */}
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white shadow-xl rounded-xl p-8"
+        >
+          {/* Dynamic Step Content */}
+          {renderStepContent()}
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="age">Age *</Label>
-                    <Input
-                      id="age"
-                      type="number"
-                      placeholder="25"
-                      min="18"
-                      max="65"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="gender">Gender *</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select gender" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="male">Male</SelectItem>
-                        <SelectItem value="female">Female</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                        <SelectItem value="prefer-not-to-say">
-                          Prefer not to say
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="language">Primary Language</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select language" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="hindi">Hindi</SelectItem>
-                        <SelectItem value="english">English</SelectItem>
-                        <SelectItem value="tamil">Tamil</SelectItem>
-                        <SelectItem value="telugu">Telugu</SelectItem>
-                        <SelectItem value="marathi">Marathi</SelectItem>
-                        <SelectItem value="gujarati">Gujarati</SelectItem>
-                        <SelectItem value="bengali">Bengali</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="about">
-                    Tell us about yourself (Optional)
-                  </Label>
-                  <Textarea
-                    id="about"
-                    placeholder="Briefly describe your work experience and what makes you a reliable worker..."
-                    className="min-h-[100px]"
-                  />
-                </div>
-              </div>
+          {/* Navigation Buttons */}
+          <div className="mt-8 flex justify-between">
+            {step > 1 && (
+              <button
+                type="button"
+                onClick={prevStep}
+                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50"
+              >
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Previous
+              </button>
             )}
 
-            {/* Step 2: Skills & Experience */}
-            {currentStep === 2 && (
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <Label>Select Your Skills *</Label>
-                  <p className="text-sm text-muted-foreground">
-                    Choose all skills that apply to you. You can add more later.
-                  </p>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {skills.map((skill) => (
-                      <div key={skill} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={skill}
-                          checked={selectedSkills.includes(skill)}
-                          onCheckedChange={() => handleSkillToggle(skill)}
-                        />
-                        <Label
-                          htmlFor={skill}
-                          className="text-sm font-normal cursor-pointer"
-                        >
-                          {skill}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
-                  {selectedSkills.length > 0 && (
-                    <div className="space-y-2">
-                      <Label>Selected Skills:</Label>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedSkills.map((skill) => (
-                          <Badge key={skill} variant="secondary">
-                            {skill}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="experience">Years of Experience *</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select experience level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="fresher">
-                        Fresher (0-1 years)
-                      </SelectItem>
-                      <SelectItem value="1-3">1-3 years</SelectItem>
-                      <SelectItem value="3-5">3-5 years</SelectItem>
-                      <SelectItem value="5-10">5-10 years</SelectItem>
-                      <SelectItem value="10+">10+ years</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="workSamples">
-                    Upload Work Photos (Optional)
-                  </Label>
-                  <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
-                    <Upload className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                    <p className="text-muted-foreground mb-2">
-                      Upload photos of your previous work to showcase your
-                      skills
-                    </p>
-                    <Button variant="outline" size="sm">
-                      Choose Files
-                    </Button>
-                  </div>
-                </div>
-              </div>
+            {step < 4 && (
+              <button
+                type="button"
+                onClick={nextStep}
+                disabled={!isStepValid}
+                className={`
+                  inline-flex items-center px-4 py-2 border border-transparent 
+                  text-sm font-medium rounded-md shadow-sm text-white 
+                  ${
+                    isStepValid
+                      ? "bg-orange-600 hover:bg-orange-700"
+                      : "bg-gray-400 cursor-not-allowed"
+                  }
+                `}
+              >
+                Next Step
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </button>
             )}
 
-            {/* Step 3: Location & Availability */}
-            {currentStep === 3 && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="city">City *</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select your city" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {cities.map((city) => (
-                          <SelectItem key={city} value={city.toLowerCase()}>
-                            {city}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="area">Area/Locality *</Label>
-                    <Input
-                      id="area"
-                      placeholder="e.g., Andheri West, Koramangala"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="workRadius">
-                    How far are you willing to travel for work? *
-                  </Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select travel distance" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="5km">Within 5 km</SelectItem>
-                      <SelectItem value="10km">Within 10 km</SelectItem>
-                      <SelectItem value="20km">Within 20 km</SelectItem>
-                      <SelectItem value="city">Anywhere in the city</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-4">
-                  <Label>When are you available to work? *</Label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {[
-                      "Monday",
-                      "Tuesday",
-                      "Wednesday",
-                      "Thursday",
-                      "Friday",
-                      "Saturday",
-                      "Sunday",
-                    ].map((day) => (
-                      <div key={day} className="flex items-center space-x-2">
-                        <Checkbox id={day} />
-                        <Label htmlFor={day} className="text-sm font-normal">
-                          {day}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="workType">Preferred Work Type *</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select work preference" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="full-time">Full-time jobs</SelectItem>
-                      <SelectItem value="part-time">Part-time jobs</SelectItem>
-                      <SelectItem value="contract">Contract work</SelectItem>
-                      <SelectItem value="any">Any type of work</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+            {step === 4 && (
+              <button
+                type="submit"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700"
+              >
+                Create Profile
+                <CheckCircle className="ml-2 h-4 w-4" />
+              </button>
             )}
-
-            {/* Step 4: Verification */}
-            {currentStep === 4 && (
-              <div className="space-y-6">
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                  <div className="flex items-start space-x-3">
-                    <Star className="h-5 w-5 text-yellow-500 mt-0.5" />
-                    <div>
-                      <h4 className="font-semibold text-yellow-800">
-                        Why Verification Matters
-                      </h4>
-                      <p className="text-sm text-yellow-700 mt-1">
-                        Verified profiles get 3x more job opportunities and
-                        higher ratings from employers.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <Label>Identity Verification *</Label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="border border-border rounded-lg p-4">
-                      <h4 className="font-semibold mb-2">Aadhaar Card</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        Upload clear photos of both sides
-                      </p>
-                      <Button variant="outline" size="sm" className="w-full">
-                        <Upload className="h-4 w-4 mr-2" />
-                        Upload Aadhaar
-                      </Button>
-                    </div>
-                    <div className="border border-border rounded-lg p-4">
-                      <h4 className="font-semibold mb-2">Profile Photo</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        Clear photo of yourself
-                      </p>
-                      <Button variant="outline" size="sm" className="w-full">
-                        <Upload className="h-4 w-4 mr-2" />
-                        Upload Photo
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <Label>Additional Documents (Optional)</Label>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="border border-border rounded-lg p-4">
-                      <h4 className="font-semibold mb-2">Skill Certificates</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        ITI, Trade certificates, etc.
-                      </p>
-                      <Button variant="outline" size="sm" className="w-full">
-                        <Upload className="h-4 w-4 mr-2" />
-                        Upload Certificates
-                      </Button>
-                    </div>
-                    <div className="border border-border rounded-lg p-4">
-                      <h4 className="font-semibold mb-2">References</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        Contact info of previous employers
-                      </p>
-                      <Button variant="outline" size="sm" className="w-full">
-                        <Phone className="h-4 w-4 mr-2" />
-                        Add References
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                    <div>
-                      <h4 className="font-semibold text-green-800">
-                        Ready to Get Started!
-                      </h4>
-                      <p className="text-sm text-green-700 mt-1">
-                        Your profile will be reviewed within 24 hours. You'll
-                        receive a confirmation SMS once approved.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Navigation Buttons */}
-            <div className="flex justify-between pt-6 border-t border-border">
-              <div>
-                {currentStep > 1 && (
-                  <Button variant="outline" onClick={prevStep}>
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    Previous
-                  </Button>
-                )}
-                {currentStep === 1 && (
-                  <Link to="/">
-                    <Button variant="outline">
-                      <ArrowLeft className="h-4 w-4 mr-2" />
-                      Back to Home
-                    </Button>
-                  </Link>
-                )}
-              </div>
-
-              <div>
-                {currentStep < 4 ? (
-                  <Button
-                    onClick={nextStep}
-                    className="bg-secondary hover:bg-secondary/90"
-                  >
-                    Next Step
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </Button>
-                ) : (
-                  <Button className="bg-primary hover:bg-primary/90">
-                    Create My Profile
-                    <CheckCircle className="h-4 w-4 ml-2" />
-                  </Button>
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Help Section */}
-        <div className="mt-12 text-center">
-          <p className="text-muted-foreground">
-            Need help? Call our support team at{" "}
-            <a
-              href="tel:+919876543210"
-              className="text-primary hover:underline"
-            >
-              +91 98765 43210
-            </a>{" "}
-            or{" "}
-            <Link to="/help" className="text-primary hover:underline">
-              visit our help center
-            </Link>
-          </p>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );
