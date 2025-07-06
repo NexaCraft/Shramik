@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Users, Briefcase } from "lucide-react";
+import { Menu, X, Users, Briefcase, LayoutDashboard } from "lucide-react";
 
 const Navbar = () => {
+  const isLoggedIn = false;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -47,20 +48,31 @@ const Navbar = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link to="/worker-signup">
-              <button className="flex items-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors cursor-pointer">
-                <Users className="h-4 w-4 mr-2" />
-                Find Work
-              </button>
-            </Link>
-            <Link to="/employer-signup">
-              <button className="flex items-center px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors cursor-pointer">
-                <Briefcase className="h-4 w-4 mr-2" />
-                Hire Workers
-              </button>
-            </Link>
-          </div>
+          {isLoggedIn ? (
+            <div className="hidden md:flex items-center space-x-4">
+              <Link to="/dashboard">
+                <button className="flex items-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors cursor-pointer">
+                  <LayoutDashboard className="h-4 w-4 mr-2" />
+                  Dashboard
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <div className="hidden md:flex items-center space-x-4">
+              <Link to="/worker-signup">
+                <button className="flex items-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors cursor-pointer">
+                  <Users className="h-4 w-4 mr-2" />
+                  Find Work
+                </button>
+              </Link>
+              <Link to="/employer-signup">
+                <button className="flex items-center px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors cursor-pointer">
+                  <Briefcase className="h-4 w-4 mr-2" />
+                  Hire Workers
+                </button>
+              </Link>
+            </div>
+          )}
 
           {/* Mobile menu button */}
           <div className="md:hidden">
