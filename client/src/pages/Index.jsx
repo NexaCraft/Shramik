@@ -13,6 +13,7 @@ import {
   Zap,
   Car,
   Home,
+  ArrowRight,
 } from "lucide-react";
 
 const Index = () => {
@@ -204,6 +205,168 @@ const Index = () => {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* How it Works Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
+              How Shramik Works
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              A simple, transparent process to connect skilled workers with
+              employers
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                step: 1,
+                icon: Users,
+                title: "Create Profile",
+                description:
+                  "Sign up and complete your detailed professional profile",
+                color: "bg-blue-100",
+                textColor: "text-blue-600",
+              },
+              {
+                step: 2,
+                icon: MapPin,
+                title: "Browse Opportunities",
+                description: "Explore jobs or workers in your local area",
+                color: "bg-green-100",
+                textColor: "text-green-600",
+              },
+              {
+                step: 3,
+                icon: CheckCircle,
+                title: "Connect & Confirm",
+                description: "Match, communicate, and finalize work details",
+                color: "bg-orange-100",
+                textColor: "text-orange-600",
+              },
+            ].map((item) => (
+              <div
+                key={item.step}
+                className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6 text-center"
+              >
+                <div
+                  className={`${item.color} rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6`}
+                >
+                  <div className={`text-3xl font-bold ${item.textColor}`}>
+                    {item.step}
+                  </div>
+                </div>
+                <div
+                  className={`bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 border ${item.color} border-2`}
+                >
+                  <item.icon className={`h-8 w-8 ${item.textColor}`} />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 text-sm">{item.description}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Additional Explanation */}
+          <div className="mt-16 bg-white border border-gray-200 rounded-lg shadow-md p-8">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  Simplified Work Connections
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  Shramik breaks down barriers between skilled workers and
+                  employers. Our platform ensures transparent, fair, and quick
+                  connections that benefit both parties.
+                </p>
+                <ul className="space-y-2 text-gray-600">
+                  <li className="flex items-center">
+                    <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
+                    100% Free Registration
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
+                    Verified Profiles
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
+                    Secure Communication
+                  </li>
+                </ul>
+              </div>
+              <div className="flex justify-center">
+                <div className="w-full max-w-md bg-gray-100 rounded-lg p-6">
+                  <img
+                    src="/path-to-your-illustration.sv"
+                    alt="Work Connection Illustration"
+                    className="w-full h-auto"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="inline-block mb-4 px-3 py-1 rounded-full bg-orange-100 text-orange-600 text-sm font-medium">
+                Our Mission
+              </span>
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+                Empowering India's Workforce, One Connection at a Time
+              </h2>
+              <p className="text-lg text-gray-600 mb-6">
+                Shramik was born from a simple yet powerful idea: to bridge the
+                gap between skilled workers and local job opportunities across
+                India's diverse economic landscape.
+              </p>
+              <ul className="space-y-4 mb-8">
+                <li className="flex items-center">
+                  <CheckCircle className="h-6 w-6 text-green-500 mr-3" />
+                  <span>Connecting local talent with meaningful work</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="h-6 w-6 text-green-500 mr-3" />
+                  <span>Providing fair opportunities for skilled workers</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="h-6 w-6 text-green-500 mr-3" />
+                  <span>Supporting local economic growth</span>
+                </li>
+              </ul>
+              <Link to="/about">
+                <button className="inline-flex items-center px-6 py-3 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors">
+                  Learn More About Us
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </button>
+              </Link>
+            </div>
+            <div className="relative">
+              <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg">
+                <img
+                  src="/team-image.jpg" // Replace with your actual team or workplace image
+                  alt="Shramik Team"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-8 -right-8 bg-white shadow-lg rounded-lg p-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-orange-600">5+</div>
+                  <div className="text-sm text-gray-600">Years of Impact</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
