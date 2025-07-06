@@ -7,6 +7,7 @@ import {
   Award, 
   Heart 
 } from 'lucide-react';
+import { assets } from '../assets/asstes';
 
 const AboutPage = () => {
   const corePrinciples = [
@@ -92,7 +93,7 @@ const AboutPage = () => {
             <div>
               <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg">
                 <img 
-                  src="/founder-image.jpg"  // Replace with actual founder image
+                  src={assets.Shramik_Illustration_01}
                   alt="Shramik Founders"
                   className="w-full h-full object-cover"
                 />

@@ -15,6 +15,7 @@ import {
   Home,
   ArrowRight,
 } from "lucide-react";
+import { assets } from "../assets/asstes";
 
 const Index = () => {
   const skills = [
@@ -302,11 +303,11 @@ const Index = () => {
                 </ul>
               </div>
               <div className="flex justify-center">
-                <div className="w-full max-w-md bg-gray-100 rounded-lg p-6">
+                <div className="w-full max-w-md bg-gray-100 rounded-lg">
                   <img
-                    src="/path-to-your-illustration.sv"
+                    src={assets.Shramik_Illustration_03}
                     alt="Work Connection Illustration"
-                    className="w-full h-auto"
+                    className="w-full h-auto object-cover"
                   />
                 </div>
               </div>
@@ -355,7 +356,7 @@ const Index = () => {
             <div className="relative">
               <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg">
                 <img
-                  src="/team-image.jpg" // Replace with your actual team or workplace image
+                  src={assets.Shramik_Illustration_04}
                   alt="Shramik Team"
                   className="w-full h-full object-cover"
                 />
