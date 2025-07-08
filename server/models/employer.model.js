@@ -7,12 +7,58 @@ const employerSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    companyName: String,
-    industryType: String,
-    location: String,
-    verified: {
-      type: Boolean,
-      default: false,
+    contactName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+      unique: true,
+      match: /^\d{10}$/,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    businessName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    businessType: {
+      type: String,
+      required: true,
+    },
+    teamSize: {
+      type: String,
+    },
+    businessDescription: {
+      type: String,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    area: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+    },
+    desiredWorkerTypes: [
+      {
+        type: String,
+      },
+    ],
+    hiringFrequency: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }
