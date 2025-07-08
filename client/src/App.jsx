@@ -8,7 +8,7 @@ import LoadingSpinner from "./components/LoadingSpinner";
 
 // Lazy load pages for performance
 const Index = lazy(() => import("./pages/Index"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+const NotFound = lazy(() => import("./pages/common/NotFound"));
 const HowItWorksPage = lazy(() => import("./pages/HowItWorks"));
 const AboutPage = lazy(() => import("./pages/About"));
 const ContactPage = lazy(() => import("./pages/Contact"));
@@ -17,7 +17,7 @@ const WorkerSignup = lazy(() => import("./pages/auth/WorkerSignup"));
 
 // New Authentication Pages
 const Login = lazy(() => import("./pages/auth/Login"));
-// const Unauthorized = lazy(() => import("./pages/Unauthorized"));
+const Unauthorized = lazy(() => import("./pages/common/Unauthorized"));
 
 // Dashboard Pages
 // const WorkerDashboard = lazy(() => import("./pages/dashboard/WorkerDashboard"));
@@ -49,7 +49,7 @@ const App = () => (
               // </AuthRedirect>
             }
           />
-          {/* <Route path="/unauthorized" element={<Unauthorized />} /> */}
+          <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/employer-signup" element={<EmployerSignup />} />
           <Route path="/worker-signup" element={<WorkerSignup />} />
 
