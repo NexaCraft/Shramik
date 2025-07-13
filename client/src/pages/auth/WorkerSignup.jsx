@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import {
   Users,
   CheckCircle,
@@ -6,60 +5,180 @@ import {
   Phone,
   Mail,
   MapPin,
-  Star,
-  Shield,
-  Clock,
+  Eye,
+  EyeOff,
 } from "lucide-react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { registerWorker } from "../../redux/features/auth/‎authSlice";
+import { benefits, skills, cities } from "../../assets/asstes";
 
 const WorkerSignup = () => {
-  const skills = [
-    "Carpentry",
-    "Plumbing",
-    "Electrical",
-    "Painting",
-    "Welding",
-    "Masonry",
-    "Driving",
-    "Cleaning",
-    "Cooking",
-    "Security",
-  ];
+  const [formData, setFormData] = useState({
+    fullName: "",
+    phone: "",
+    email: "",
+    age: "",
+    gender: "",
+    password: "",
+    confirmPassword: "",
+    skills: [],
+    experience: "",
+    workPreference: "",
+    city: "",
+    termsAccepted: false,
+  });
+  const [passwordVisibility, setPasswordVisibility] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+  const [errors, setErrors] = useState({});
 
-  const cities = [
-    "Mumbai",
-    "Delhi",
-    "Bangalore",
-    "Chennai",
-    "Kolkata",
-    "Hyderabad",
-    "Pune",
-    "Ahmedabad",
-    "Surat",
-    "Jaipur",
-  ];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading, error } = useSelector((state) => state.auth);
 
-  const benefits = [
-    {
-      icon: Users,
-      title: "50,000+ Job Opportunities",
-      description: "Access to diverse job listings across industries",
-    },
-    {
-      icon: Shield,
-      title: "Verified Employers",
-      description: "All job postings are from verified businesses",
-    },
-    {
-      icon: Star,
-      title: "Fair Compensation",
-      description: "Competitive rates and timely payments",
-    },
-    {
-      icon: Clock,
-      title: "Flexible Work",
-      description: "Choose jobs that fit your schedule",
-    },
-  ];
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox") {
+      if (name === "termsAccepted") {
+        setFormData((prev) => ({
+          ...prev,
+          [name]: checked,
+        }));
+      } else {
+        // Handle skills checkbox
+        setFormData((prev) => ({
+          ...prev,
+          skills: checked
+            ? [...prev.skills, value]
+            : prev.skills.filter((skill) => skill !== value),
+        }));
+      }
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Validate full name
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = "Full name is required";
+    }
+
+    // Validate phone
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    } else if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = "Invalid phone number";
+    }
+
+    // Validate age
+    if (!formData.age) {
+      newErrors.age = "Age is required";
+    } else if (formData.age < 18 || formData.age > 65) {
+      newErrors.age = "Age must be between 18 and 65";
+    }
+
+    // Validate gender
+    if (!formData.gender) {
+      newErrors.gender = "Gender is required";
+    }
+
+    // Validate password
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (!passwordRegex.test(formData.password)) {
+      newErrors.password =
+        "Password must be 8+ chars, include uppercase, lowercase, number, special char";
+    }
+
+    // Confirm password
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    // Validate skills
+    if (formData.skills.length === 0) {
+      newErrors.skills = "Select at least one skill";
+    }
+
+    // Validate experience
+    if (!formData.experience) {
+      newErrors.experience = "Experience level is required";
+    }
+
+    // Validate work preference
+    if (!formData.workPreference) {
+      newErrors.workPreference = "Work preference is required";
+    }
+
+    // Validate city
+    if (!formData.city) {
+      newErrors.city = "City is required";
+    }
+
+    // Validate terms
+    if (!formData.termsAccepted) {
+      newErrors.termsAccepted = "You must accept the terms and conditions";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrors({});
+
+    if (validateForm()) {
+      try {
+        const result = await dispatch(
+          registerWorker({
+            fullName: formData.fullName,
+            phone: formData.phone,
+            email: formData.email,
+            age: formData.age,
+            gender: formData.gender,
+            password: formData.password,
+            skills: formData.skills,
+            experience: formData.experience,
+            workPreference: formData.workPreference,
+            city: formData.city,
+          })
+        ).unwrap();
+
+        if (result?.data?.success) {
+          toast.success("Profile created successfully!");
+        }
+
+        navigate("/worker/dashboard");
+      } catch (error) {
+        toast.error(error?.message || "Registration failed");
+        console.error("Registration failed", error);
+      }
+    } else {
+      toast.error("Please fix the form errors");
+    }
+  };
+
+  const togglePasswordVisibility = (field) => {
+    setPasswordVisibility((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -325,13 +444,93 @@ const WorkerSignup = () => {
                   </div>
                 </fieldset>
 
-                {/* Terms and Submit */}
+                {/* Password Fields */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2 relative">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Password *
+                    </label>
+                    <input
+                      type={passwordVisibility.password ? "text" : "password"}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      placeholder="Create a strong password"
+                      className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 
+              ${
+                errors.password
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:ring-orange-500"
+              }`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => togglePasswordVisibility("password")}
+                      className="absolute right-3 top-9 text-gray-500 cursor-pointer"
+                    >
+                      {passwordVisibility.password ? (
+                        <EyeOff size={20} />
+                      ) : (
+                        <Eye size={20} />
+                      )}
+                    </button>
+                    {errors.password && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.password}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2 relative">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Confirm Password *
+                    </label>
+                    <input
+                      type={
+                        passwordVisibility.confirmPassword ? "text" : "password"
+                      }
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      placeholder="Confirm your password"
+                      className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 
+              ${
+                errors.confirmPassword
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:ring-orange-500"
+              }`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        togglePasswordVisibility("confirmPassword")
+                      }
+                      className="absolute right-3 top-9 text-gray-500 cursor-pointer"
+                    >
+                      {passwordVisibility.confirmPassword ? (
+                        <EyeOff size={20} />
+                      ) : (
+                        <Eye size={20} />
+                      )}
+                    </button>
+                    {errors.confirmPassword && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.confirmPassword}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Terms Checkbox with Error Handling */}
                 <div className="space-y-4">
                   <label className="inline-flex items-center space-x-2">
                     <input
                       type="checkbox"
-                      name="terms"
-                      className="h-4 w-4 text-orange-600 border-gray-300 rounded"
+                      name="termsAccepted"
+                      checked={formData.termsAccepted}
+                      onChange={handleChange}
+                      className={`h-4 w-4 text-orange-600 border-gray-300 rounded 
+              ${errors.termsAccepted ? "border-red-500" : ""}`}
                       required
                     />
                     <span className="text-sm text-gray-700 leading-relaxed">
@@ -352,12 +551,35 @@ const WorkerSignup = () => {
                       .
                     </span>
                   </label>
+                  {errors.termsAccepted && (
+                    <p className="text-red-500 text-xs">
+                      {errors.termsAccepted}
+                    </p>
+                  )}
 
+                  {/* Global Error Display */}
+                  {error && (
+                    <div className="bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded relative">
+                      {error}
+                    </div>
+                  )}
+
+                  {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center px-6 py-3 bg-orange-600 text-white text-lg font-medium rounded-md hover:bg-orange-700 transition-colors cursor-pointer"
+                    disabled={isLoading}
+                    onClick={handleSubmit}
+                    className={`w-full inline-flex items-center justify-center px-6 py-3 
+            text-white text-lg font-medium rounded-md transition-colors 
+            ${
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-orange-600 hover:bg-orange-700 cursor-pointer"
+            }`}
                   >
-                    Create Worker Profile
+                    {isLoading
+                      ? "Creating Profile..."
+                      : "Create Worker Profile"}
                     <CheckCircle className="h-5 w-5 ml-2" />
                   </button>
                 </div>

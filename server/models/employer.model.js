@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const employerSchema = new mongoose.Schema(
   {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
     contactName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    businessName: {
       type: String,
       required: true,
       trim: true,
@@ -25,12 +25,11 @@ const employerSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-    businessName: {
+    businessType: {
       type: String,
       required: true,
-      trim: true,
     },
-    businessType: {
+    city: {
       type: String,
       required: true,
     },
@@ -39,10 +38,6 @@ const employerSchema = new mongoose.Schema(
     },
     businessDescription: {
       type: String,
-    },
-    city: {
-      type: String,
-      required: true,
     },
     area: {
       type: String,
@@ -59,6 +54,18 @@ const employerSchema = new mongoose.Schema(
     hiringFrequency: {
       type: String,
       required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    registrationDate: {
+      type: Date,
+      default: Date.now,
     },
   },
   { timestamps: true }

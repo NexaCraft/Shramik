@@ -1,14 +1,9 @@
 import jwt from "jsonwebtoken";
 
-// Generate JWT Token
-export const generateToken = (user) => {
-  return jwt.sign(
-    {
-      id: user._id,
-      email: user.email,
-      role: user.role,
-    },
-    process.env.JWT_SECRET,
-    { expiresIn: "30d" }
-  );
+export const generateToken = (userId, userType) => {
+  return jwt.sign({ userId, userType }, process.env.JWT_SECRET, {
+    expiresIn: process.env.TOKEN_EXPIRATION,
+    issuer: "ShramikPlatform",
+    audience: "ShramikUsers",
+  });
 };

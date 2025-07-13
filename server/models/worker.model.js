@@ -1,26 +1,7 @@
 import mongoose from "mongoose";
 
-// const calendarSchema = new mongoose.Schema({
-//   date: Date,
-//   area: String,
-//   skillAvailable: String,
-// });
-
-// const historySchema = new mongoose.Schema({
-//   jobId: mongoose.Schema.Types.ObjectId,
-//   employerId: mongoose.Schema.Types.ObjectId,
-//   rating: Number,
-//   review: String,
-//   completedAt: Date,
-// });
-
 const workerSchema = new mongoose.Schema(
   {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
     fullName: {
       type: String,
       required: true,
@@ -71,8 +52,23 @@ const workerSchema = new mongoose.Schema(
       required: true,
       enum: ["full-time", "part-time", "contract", "freelance"],
     },
-    // calendar: [calendarSchema],
-    // workHistory: [historySchema],
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    profile: {
+      profilePicture: {
+        type: String,
+      }
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    registrationDate: {
+      type: Date,
+      default: Date.now,
+    },
   },
   { timestamps: true }
 );
