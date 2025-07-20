@@ -59,11 +59,15 @@ const workerSchema = new mongoose.Schema(
     profile: {
       profilePicture: {
         type: String,
-      }
+      },
     },
     password: {
       type: String,
       required: true,
+    },
+    userType: {
+      type: String,
+      default: "worker",
     },
     registrationDate: {
       type: Date,

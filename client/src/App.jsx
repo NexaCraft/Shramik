@@ -1,9 +1,9 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import LoadingSpinner from "./components/LoadingSpinner";
-import { AuthRedirect, ProtectedRoute } from "./components/ProtectedRoute";
+import Navbar from "./components/common/Navbar";
+import Footer from "./components/common/Footer";
+import LoadingSpinner from "./components/common/LoadingSpinner";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 // Lazy load pages for performance
 const Index = lazy(() => import("./pages/Index"));
@@ -34,26 +34,21 @@ const App = () => (
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
 
-          {/* Authentication Routes */}
-          <Route
-            path="/login"
-            element={
-              <AuthRedirect>
-                <Login />
-              </AuthRedirect>
-            }
-          />
+          <Route path="/login" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/employer-signup" element={<EmployerSignup />} />
           <Route path="/worker-signup" element={<WorkerSignup />} />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute allowedRoles={["worker"]} />}>
-            <Route path="/worker/dashboard" element={<WorkerDashboard />} />
+            <Route path="/worker/dashboard/:id" element={<WorkerDashboard />} />
           </Route>
 
           <Route element={<ProtectedRoute allowedRoles={["employer"]} />}>
-            <Route path="/employer/dashboard" element={<EmployerDashboard />} />
+            <Route
+              path="/employer/dashboard/:id"
+              element={<EmployerDashboard />}
+            />
           </Route>
 
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>

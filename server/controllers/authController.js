@@ -24,7 +24,7 @@ export const registerUser = async (Model, req, res) => {
       });
     }
 
-    const salt = await bcrypt.genSalt(process.env.PASSWORD_SALT_ROUNDS);
+    const salt = parseInt(process.env.PASSWORD_SALT_ROUNDS, 10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new Model({

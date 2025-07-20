@@ -63,6 +63,10 @@ const employerSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    userType: {
+      type: String,
+      default: "employer",
+    },
     registrationDate: {
       type: Date,
       default: Date.now,

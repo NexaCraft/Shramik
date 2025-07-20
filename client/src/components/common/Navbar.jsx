@@ -1,10 +1,35 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X, Users, Briefcase, LayoutDashboard } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Menu,
+  X,
+  Users,
+  Briefcase,
+  LayoutDashboard,
+  LogOut,
+  LogIn,
+} from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { logout } from "../../redux/features/auth/‎authSlice";
 
 const Navbar = () => {
-  const isLoggedIn = false;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    try {
+      dispatch(logout());
+      toast.success("Logged out successfully");
+      navigate("/");
+      setIsMenuOpen(false);
+    } catch (error) {
+      toast.error("Logout failed");
+      console.error("Logout error:", error);
+    }
+  };
 
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
@@ -48,17 +73,30 @@ const Navbar = () => {
           </div>
 
           {/* CTA Buttons */}
-          {isLoggedIn ? (
+          {user ? (
             <div className="hidden md:flex items-center space-x-4">
-              <Link to="/dashboard">
+              <Link to={`/${user?.userType}/dashboard/${user?._id}`}>
                 <button className="flex items-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors cursor-pointer">
                   <LayoutDashboard className="h-4 w-4 mr-2" />
                   Dashboard
                 </button>
               </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors cursor-pointer"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </button>
             </div>
           ) : (
             <div className="hidden md:flex items-center space-x-4">
+              <Link to="/login">
+                <button className="flex items-center px-4 py-2 border border-green-500 text-green-500 rounded-md hover:bg-green-500 hover:text-white transition-colors cursor-pointer">
+                  <LogIn className="h-4 w-4 mr-2" />
+                  Login
+                </button>
+              </Link>
               <Link to="/worker-signup">
                 <button className="flex items-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors cursor-pointer">
                   <Users className="h-4 w-4 mr-2" />
@@ -115,21 +153,53 @@ const Navbar = () => {
                 Contact
               </Link>
               <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200">
-                <Link to="/worker-signup" onClick={() => setIsMenuOpen(false)}>
-                  <button className="w-full flex items-center justify-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors">
-                    <Users className="h-4 w-4 mr-2" />
-                    Find Work
-                  </button>
-                </Link>
-                <Link
-                  to="/employer-signup"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <button className="w-full flex items-center justify-center px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors">
-                    <Briefcase className="h-4 w-4 mr-2" />
-                    Hire Workers
-                  </button>
-                </Link>
+                {user ? (
+                  <>
+                    <Link
+                      to={`/${user?.userType}/dashboard/${user?._id}`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <button className="w-full flex items-center justify-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors">
+                        <LayoutDashboard className="h-4 w-4 mr-2" />
+                        Dashboard
+                      </button>
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center justify-center px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                      <button className="w-full flex items-center justify-center px-4 py-2 border border-green-500 text-green-500 rounded-md hover:bg-green-500 hover:text-white transition-colors">
+                        <LogIn className="h-4 w-4 mr-2" />
+                        Login
+                      </button>
+                    </Link>
+                    <Link
+                      to="/worker-signup"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <button className="w-full flex items-center justify-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors">
+                        <Users className="h-4 w-4 mr-2" />
+                        Find Work
+                      </button>
+                    </Link>
+                    <Link
+                      to="/employer-signup"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <button className="w-full flex items-center justify-center px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors">
+                        <Briefcase className="h-4 w-4 mr-2" />
+                        Hire Workers
+                      </button>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>

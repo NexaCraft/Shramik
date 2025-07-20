@@ -1,49 +1,41 @@
-import React from 'react';
-import { 
-  Users, 
-  Target, 
-  Globe, 
-  CheckCircle, 
-  Award, 
-  Heart 
-} from 'lucide-react';
-import { assets } from '../assets/asstes';
+import { Users, Target, Globe } from "lucide-react";
+import { assets } from "../assets/asstes";
 
 const AboutPage = () => {
   const corePrinciples = [
     {
       icon: Users,
       title: "Empowerment",
-      description: "Providing opportunities for skilled workers to thrive"
+      description: "Providing opportunities for skilled workers to thrive",
     },
     {
       icon: Target,
       title: "Transparency",
-      description: "Creating a fair and open marketplace for work"
+      description: "Creating a fair and open marketplace for work",
     },
     {
       icon: Globe,
       title: "Local Impact",
-      description: "Supporting local economies and communities"
-    }
+      description: "Supporting local economies and communities",
+    },
   ];
 
   const teamMembers = [
     {
       name: "Rahul Sharma",
       role: "Founder & CEO",
-      bio: "Serial entrepreneur with 15+ years in tech and workforce development"
+      bio: "Serial entrepreneur with 15+ years in tech and workforce development",
     },
     {
       name: "Priya Patel",
       role: "Chief Operations Officer",
-      bio: "Expert in labor market dynamics and social entrepreneurship"
+      bio: "Expert in labor market dynamics and social entrepreneurship",
     },
     {
       name: "Amit Kumar",
       role: "Technology Lead",
-      bio: "Innovative tech leader passionate about solving social challenges"
-    }
+      bio: "Innovative tech leader passionate about solving social challenges",
+    },
   ];
 
   return (
@@ -55,8 +47,8 @@ const AboutPage = () => {
             About <span className="text-orange-600">Shramik</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Our mission is to revolutionize how skilled workers find opportunities 
-            and how employers connect with local talent
+            Our mission is to revolutionize how skilled workers find
+            opportunities and how employers connect with local talent
           </p>
         </div>
       </section>
@@ -70,14 +62,15 @@ const AboutPage = () => {
                 Our Journey Begins
               </h2>
               <p className="text-lg text-gray-600 mb-4">
-                Shramik was founded in 2018 with a simple yet powerful vision: 
-                to create a platform that bridges the gap between skilled workers 
-                and local job opportunities across India.
+                Shramik was founded in 2018 with a simple yet powerful vision:
+                to create a platform that bridges the gap between skilled
+                workers and local job opportunities across India.
               </p>
               <p className="text-lg text-gray-600 mb-6">
-                Recognizing the challenges faced by millions of skilled workers 
-                in finding consistent and fair work, we developed a technology-driven 
-                solution that empowers both workers and employers.
+                Recognizing the challenges faced by millions of skilled workers
+                in finding consistent and fair work, we developed a
+                technology-driven solution that empowers both workers and
+                employers.
               </p>
               <div className="flex space-x-4">
                 <div className="text-center">
@@ -92,7 +85,7 @@ const AboutPage = () => {
             </div>
             <div>
               <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg">
-                <img 
+                <img
                   src={assets.Shramik_Illustration_01}
                   alt="Shramik Founders"
                   className="w-full h-full object-cover"
@@ -116,7 +109,7 @@ const AboutPage = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {corePrinciples.map((principle, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white border border-gray-200 rounded-lg shadow-md p-6 text-center"
               >
@@ -126,9 +119,7 @@ const AboutPage = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   {principle.title}
                 </h3>
-                <p className="text-gray-600 text-sm">
-                  {principle.description}
-                </p>
+                <p className="text-gray-600 text-sm">{principle.description}</p>
               </div>
             ))}
           </div>
@@ -148,7 +139,7 @@ const AboutPage = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {teamMembers.map((member, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-gray-100 rounded-lg p-6 text-center"
               >
@@ -158,12 +149,8 @@ const AboutPage = () => {
                 <h3 className="text-lg font-semibold text-gray-900">
                   {member.name}
                 </h3>
-                <p className="text-sm text-gray-600 mb-3">
-                  {member.role}
-                </p>
-                <p className="text-gray-500 text-sm">
-                  {member.bio}
-                </p>
+                <p className="text-sm text-gray-600 mb-3">{member.role}</p>
+                <p className="text-gray-500 text-sm">{member.bio}</p>
               </div>
             ))}
           </div>

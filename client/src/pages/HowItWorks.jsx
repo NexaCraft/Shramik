@@ -1,73 +1,75 @@
-import React from 'react';
-import { 
-  Users, 
-  MapPin, 
-  CheckCircle, 
-  Shield, 
-  Clock, 
-  Star, 
-  Search, 
-  Phone, 
-  Handshake 
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
+import {
+  Users,
+  CheckCircle,
+  Shield,
+  Clock,
+  Star,
+  Search,
+  Handshake,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 const HowItWorksPage = () => {
   const steps = [
     {
       title: "Create Your Profile",
-      description: "Sign up and build a comprehensive professional profile showcasing your skills, experience, and certifications.",
+      description:
+        "Sign up and build a comprehensive professional profile showcasing your skills, experience, and certifications.",
       icon: Users,
       color: "bg-blue-100",
       details: [
         "Quick and easy registration",
         "Highlight your skills and expertise",
         "Upload professional certifications",
-        "Add your work history and references"
-      ]
+        "Add your work history and references",
+      ],
     },
     {
       title: "Browse Opportunities",
-      description: "Explore a wide range of job opportunities tailored to your skills and location.",
+      description:
+        "Explore a wide range of job opportunities tailored to your skills and location.",
       icon: Search,
       color: "bg-green-100",
       details: [
         "Location-based job matching",
         "Filter jobs by skill and preference",
         "View detailed job descriptions",
-        "Transparent pricing and requirements"
-      ]
+        "Transparent pricing and requirements",
+      ],
     },
     {
       title: "Connect & Confirm",
-      description: "Communicate with potential employers, negotiate terms, and finalize work arrangements.",
+      description:
+        "Communicate with potential employers, negotiate terms, and finalize work arrangements.",
       icon: Handshake,
       color: "bg-orange-100",
       details: [
         "Secure in-app messaging",
         "Discuss job details",
         "Agree on terms and pricing",
-        "Schedule and confirm work"
-      ]
-    }
+        "Schedule and confirm work",
+      ],
+    },
   ];
 
   const features = [
     {
       icon: Shield,
       title: "Safety First",
-      description: "Comprehensive verification process for both workers and employers"
+      description:
+        "Comprehensive verification process for both workers and employers",
     },
     {
       icon: Clock,
       title: "Efficient Matching",
-      description: "Quick and accurate job and worker recommendations"
+      description: "Quick and accurate job and worker recommendations",
     },
     {
       icon: Star,
       title: "Trust & Transparency",
-      description: "Ratings and reviews to build a reliable professional network"
-    }
+      description:
+        "Ratings and reviews to build a reliable professional network",
+    },
   ];
 
   return (
@@ -79,7 +81,8 @@ const HowItWorksPage = () => {
             How <span className="text-orange-600">Shramik</span> Works
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            A simple, transparent platform connecting skilled workers with local opportunities
+            A simple, transparent platform connecting skilled workers with local
+            opportunities
           </p>
         </div>
       </section>
@@ -89,16 +92,20 @@ const HowItWorksPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {steps.map((step, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-6"
               >
-                <div className={`${step.color} rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6`}>
+                <div
+                  className={`${step.color} rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6`}
+                >
                   <div className="text-3xl font-bold text-gray-800">
                     {index + 1}
                   </div>
                 </div>
-                <div className={`bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 border ${step.color} border-2`}>
+                <div
+                  className={`bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 border ${step.color} border-2`}
+                >
                   <step.icon className="h-8 w-8 text-gray-800" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">
@@ -129,12 +136,13 @@ const HowItWorksPage = () => {
               Our Platform Guarantees
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We've built robust features to ensure a seamless experience for workers and employers
+              We've built robust features to ensure a seamless experience for
+              workers and employers
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white border border-gray-200 rounded-lg shadow-md p-6 text-center"
               >
@@ -144,9 +152,7 @@ const HowItWorksPage = () => {
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 text-sm">
-                  {feature.description}
-                </p>
+                <p className="text-gray-600 text-sm">{feature.description}</p>
               </div>
             ))}
           </div>

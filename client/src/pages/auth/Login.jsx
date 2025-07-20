@@ -13,6 +13,7 @@ const Login = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -72,6 +73,8 @@ const Login = () => {
     // Validate form
     if (validateForm()) {
       try {
+        setIsLoading(true);
+
         // Dispatch login action
         const result = await dispatch(
           login({
@@ -81,25 +84,34 @@ const Login = () => {
           })
         ).unwrap();
 
-        if (result?.data?.success) {
+        // Check if login was successful
+        if (result?.success) {
           toast.success("Login successful!");
-        }
 
-        // Navigate based on user type
-        switch (formData.userType) {
-          case "worker":
-            navigate("/worker/dashboard");
-            break;
-          case "employer":
-            navigate("/employer/dashboard");
-            break;
-          default:
-            navigate("/");
+          // Navigate based on user type
+          switch (formData.userType) {
+            case "worker":
+              navigate(`/worker/dashboard/${result?.user?._id}`);
+              break;
+            case "employer":
+              navigate(`/employer/dashboard/${result?.user?._id}`);
+              break;
+            case "admin":
+              navigate("/admin/dashboard");
+              break;
+            default:
+              navigate("/");
+          }
+        } else {
+          // Handle unsuccessful login
+          toast.error(result?.message || "Login failed");
         }
       } catch (error) {
+        // Handle any errors from the login process
         toast.error(error?.message || "Login failed");
-
         console.error("Login error:", error);
+      } finally {
+        setIsLoading(false);
       }
     } else {
       toast.error("Please fix the form errors");
@@ -218,9 +230,15 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+              disabled={isLoading}
+              className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white 
+              ${
+                isLoading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-orange-600 hover:bg-orange-700"
+              } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500`}
             >
-              Login
+              {isLoading ? "Logging in..." : "Login"}
             </button>
           </div>
         </form>
@@ -230,15 +248,9 @@ const Login = () => {
           <div className="flex justify-center space-x-4">
             <Link
               to="/forgot-password"
-              className="text-sm text-orange-600 hover:text-orange-500"
+              className="text-sm text-orange-600 hover:text-orange-500 hover:underline"
             >
               Forgot password?
-            </Link>
-            <Link
-              to="/register"
-              className="text-sm text-blue-600 hover:text-blue-500"
-            >
-              Create an account
             </Link>
           </div>
         </div>
