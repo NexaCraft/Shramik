@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-const baseURL = import.meta.env.VITE_BASE_URL;
+import { baseURL } from "../../assets/asstes";
 
 const WorkerDashboard = () => {
   const { user } = useSelector((store) => store.auth);
@@ -28,7 +28,7 @@ const WorkerDashboard = () => {
         const profileResponse = await axios.get(
           `${baseURL}/workers/profile/${user._id}`
         );
-        const data = profileResponse?.data?.data?.workerProfile;
+        const data = profileResponse?.data?.data?.profileData;
         setWorkerProfile(data);
 
         // Fetch job applications

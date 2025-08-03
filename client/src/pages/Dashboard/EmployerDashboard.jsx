@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-const baseURL = import.meta.env.VITE_BASE_URL;
+import { baseURL } from "../../assets/asstes";
 
 const EmployerDashboard = () => {
   const { user } = useSelector((store) => store.auth);
@@ -30,7 +30,6 @@ const EmployerDashboard = () => {
     totalApplicants: 0,
     hiredWorkers: 0,
   });
-  console.log(baseURL);
 
   // Fetch employer data and job information
   useEffect(() => {
@@ -38,7 +37,7 @@ const EmployerDashboard = () => {
       try {
         // Fetch employer profile
         const profileResponse = await axios.get(
-          `http://localhost:3000/api/v1/employers/profile/${user._id}`
+          `${baseURL}/employers/profile/${user._id}`
         );
         const data = profileResponse?.data?.data?.employerProfile;
         setEmployerProfile(data);
