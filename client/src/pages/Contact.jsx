@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import {
   Mail,
   Phone,
@@ -48,18 +48,21 @@ const ContactPage = () => {
       title: "Email Support",
       description: "Our team typically responds within 24 hours",
       contact: "support@shramik.com",
+      colorClass: "text-blue-600 bg-blue-100", // Blue for communication
     },
     {
       icon: Phone,
       title: "Phone Support",
       description: "Available Monday-Saturday, 9 AM - 6 PM",
-      contact: "+91 1234 5678 90",
+      contact: "+91 9624342055",
+      colorClass: "text-green-600 bg-green-100", // Green for active support
     },
     {
       icon: MapPin,
       title: "Office Location",
-      description: "Visit us at our Bangalore headquarters",
-      contact: "123 Workforce Street, Tech Hub, Bangalore",
+      description: "Visit us at our Valsad headquarters",
+      contact: "Umbergaon, Valsad, Gujarat",
+      colorClass: "text-red-600 bg-red-100", // Red for location marker
     },
   ];
 
@@ -86,9 +89,12 @@ const ContactPage = () => {
                 key={index}
                 className="bg-white border border-gray-200 rounded-lg shadow-md p-6 text-center"
               >
-                <div className="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <method.icon className="h-8 w-8 text-orange-600" />
+                <div
+                  className={`rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 ${method.colorClass}`}
+                >
+                  <method.icon className="h-8 w-8" />
                 </div>
+
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   {method.title}
                 </h3>
@@ -221,21 +227,24 @@ const ContactPage = () => {
             Additional Support Channels
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
+            {/* Help Center */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <Globe className="h-12 w-12 text-orange-600 mx-auto mb-4" />
+              <Globe className="h-12 w-12 text-blue-600 bg-blue-100 rounded-full p-2 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-3">Help Center</h3>
               <p className="text-gray-600">
                 Browse our comprehensive help center for quick answers
               </p>
               <a
                 href="/help"
-                className="mt-4 inline-block text-orange-600 hover:underline"
+                className="mt-4 inline-block text-blue-600 hover:underline"
               >
                 Visit Help Center
               </a>
             </div>
+
+            {/* Support Hours */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <Clock className="h-12 w-12 text-orange-600 mx-auto mb-4" />
+              <Clock className="h-12 w-12 text-green-600 bg-green-100 rounded-full p-2 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-3">Support Hours</h3>
               <p className="text-gray-600">
                 Monday - Saturday: 9:00 AM to 6:00 PM IST
@@ -244,15 +253,17 @@ const ContactPage = () => {
                 Excluding public holidays
               </p>
             </div>
+
+            {/* FAQ */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <Info className="h-12 w-12 text-orange-600 mx-auto mb-4" />
+              <Info className="h-12 w-12 text-purple-600 bg-purple-100 rounded-full p-2 mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-3">FAQ</h3>
               <p className="text-gray-600">
                 Find answers to commonly asked questions
               </p>
               <a
                 href="/faq"
-                className="mt-4 inline-block text-orange-600 hover:underline"
+                className="mt-4 inline-block text-purple-600 hover:underline"
               >
                 View FAQ
               </a>

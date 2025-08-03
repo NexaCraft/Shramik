@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Briefcase,
-  Clock,
   CheckCircle,
-  XCircle,
   Calendar,
   MapPin,
   User,
@@ -13,6 +11,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const WorkerDashboard = () => {
   const { user } = useSelector((store) => store.auth);
@@ -27,25 +26,26 @@ const WorkerDashboard = () => {
       try {
         // Fetch worker profile
         const profileResponse = await axios.get(
-          `/api/workers/profile/${user.id}`
+          `${baseURL}/workers/profile/${user._id}`
         );
-        setWorkerProfile(profileResponse.data);
+        const data = profileResponse?.data?.data?.workerProfile;
+        setWorkerProfile(data);
 
         // Fetch job applications
         const applicationsResponse = await axios.get(
-          `/api/jobs/applications/${user.id}`
+          `/api/jobs/applications/${user._id}`
         );
         setJobApplications(applicationsResponse.data);
 
         // Fetch upcoming jobs
         const upcomingJobsResponse = await axios.get(
-          `/api/jobs/upcoming/${user.id}`
+          `/api/jobs/upcoming/${user._id}`
         );
         setUpcomingJobs(upcomingJobsResponse.data);
 
         // Fetch notifications
         const notificationsResponse = await axios.get(
-          `/api/notifications/${user.id}`
+          `/api/notifications/${user._id}`
         );
         setNotifications(notificationsResponse.data);
       } catch (error) {
@@ -54,7 +54,7 @@ const WorkerDashboard = () => {
     };
 
     fetchWorkerData();
-  }, [user.id]);
+  }, [user._id]);
 
   // Render job application status badge
   const renderStatusBadge = (status) => {
@@ -92,7 +92,7 @@ const WorkerDashboard = () => {
               Worker Dashboard
             </h1>
             <p className="text-gray-600">
-              Welcome back, {workerProfile?.name || "Worker"}!
+              Welcome back, {workerProfile?.fullName}!
             </p>
           </div>
           <div className="flex space-x-4">

@@ -32,21 +32,25 @@ const Index = () => {
       icon: Shield,
       title: "Verified Workers",
       description: "All workers go through identity and skill verification",
+      colorClass: "text-green-600 bg-green-100",
     },
     {
       icon: MapPin,
       title: "Location-Based",
       description: "Find workers and jobs in your local area",
+      colorClass: "text-blue-600 bg-blue-100",
     },
     {
       icon: Star,
       title: "Rating System",
       description: "Transparent ratings and reviews for quality assurance",
+      colorClass: "text-yellow-600 bg-yellow-100",
     },
     {
       icon: Clock,
       title: "Quick Matching",
       description: "Get matched with suitable workers or jobs within hours",
+      colorClass: "text-purple-600 bg-purple-100",
     },
   ];
 
@@ -196,9 +200,12 @@ const Index = () => {
                   key={index}
                   className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 text-center"
                 >
-                  <div className="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <IconComponent className="h-8 w-8 text-orange-600" />
+                  <div
+                    className={`rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 ${feature.colorClass}`}
+                  >
+                    <IconComponent className="h-8 w-8" />
                   </div>
+
                   <h3 className="text-lg font-semibold text-gray-900 mb-3">
                     {feature.title}
                   </h3>

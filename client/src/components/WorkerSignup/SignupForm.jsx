@@ -41,16 +41,13 @@ const SignupForm = () => {
   ];
 
   const cities = [
-    "Mumbai",
-    "Delhi",
-    "Bangalore",
-    "Chennai",
-    "Kolkata",
-    "Hyderabad",
-    "Pune",
-    "Ahmedabad",
-    "Surat",
-    "Jaipur",
+    "Valsad",
+    "Vapi",
+    "Silvassa",
+    "Daman",
+    "Navasari",
+    "Boisar",
+    "Palghar",
   ];
   const dispatch = useDispatch();
   const navigate = useNavigate();

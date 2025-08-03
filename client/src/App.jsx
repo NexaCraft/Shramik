@@ -24,7 +24,6 @@ const AdminDashboard = lazy(() => import("./pages/dashboard/AdminDashboard"));
 const App = () => (
   <div className="flex flex-col min-h-screen">
     <Navbar />
-
     <main className="flex-grow">
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>

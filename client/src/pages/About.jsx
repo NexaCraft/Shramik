@@ -22,17 +22,18 @@ const AboutPage = () => {
 
   const teamMembers = [
     {
-      name: "Rahul Sharma",
-      role: "Founder & CEO",
-      bio: "Serial entrepreneur with 15+ years in tech and workforce development",
+      name: "Ankit Sharma",
+      role: "Founder & Business Head",
+      bio: "A mechanical engineer with over 5 years of industry experience, Ankit brings strong leadership in operations, planning, and business strategy. He leads the vision and growth of the company with a focus on building meaningful impact.",
     },
     {
-      name: "Priya Patel",
-      role: "Chief Operations Officer",
-      bio: "Expert in labor market dynamics and social entrepreneurship",
+      profile: assets.Varun_Yadav,
+      name: "Varun Yadav",
+      role: "Co-founder & Tech Lead",
+      bio: "A passionate software engineer and MERN stack developer, Varun specializes in building full-stack applications from the ground up. He is driven by a mission to create tech that solves real-world problems and improves lives.",
     },
     {
-      name: "Amit Kumar",
+      name: "Vikash Kumar",
       role: "Technology Lead",
       bio: "Innovative tech leader passionate about solving social challenges",
     },
@@ -62,7 +63,7 @@ const AboutPage = () => {
                 Our Journey Begins
               </h2>
               <p className="text-lg text-gray-600 mb-4">
-                Shramik was founded in 2018 with a simple yet powerful vision:
+                Shramik was founded in 2025 with a simple yet powerful vision:
                 to create a platform that bridges the gap between skilled
                 workers and local job opportunities across India.
               </p>
@@ -143,9 +144,20 @@ const AboutPage = () => {
                 key={index}
                 className="bg-gray-100 rounded-lg p-6 text-center"
               >
-                <div className="bg-white rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center">
-                  <Users className="h-12 w-12 text-orange-600" />
+                <div className="w-24 h-24 mx-auto mb-4">
+                  {member.profile ? (
+                    <img
+                      src={member.profile}
+                      alt={member.name}
+                      className="w-24 h-24 object-cover rounded-full border-2 border-orange-500 shadow-md"
+                    />
+                  ) : (
+                    <div className="bg-white rounded-full w-24 h-24 flex items-center justify-center">
+                      <Users className="h-12 w-12 text-orange-600" />
+                    </div>
+                  )}
                 </div>
+
                 <h3 className="text-lg font-semibold text-gray-900">
                   {member.name}
                 </h3>

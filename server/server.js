@@ -6,6 +6,8 @@ import { connectDB } from "./config/db.js";
 
 // Routes
 import authRoutes from "./routes/auth.route.js";
+import workerRoutes from "./routes/worker.route.js";
+import employersRoutes from "./routes/employer.route.js";
 
 dotenv.config();
 
@@ -25,6 +27,8 @@ connectDB();
 
 // APIs
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/workers", workerRoutes);
+app.use("/api/v1/employers", employersRoutes);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

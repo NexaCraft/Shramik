@@ -58,17 +58,20 @@ const HowItWorksPage = () => {
       title: "Safety First",
       description:
         "Comprehensive verification process for both workers and employers",
+      colorClass: "text-red-600 bg-red-100",
     },
     {
       icon: Clock,
       title: "Efficient Matching",
       description: "Quick and accurate job and worker recommendations",
+      colorClass: "text-yellow-600 bg-yellow-100",
     },
     {
       icon: Star,
       title: "Trust & Transparency",
       description:
         "Ratings and reviews to build a reliable professional network",
+      colorClass: "text-blue-600 bg-blue-100",
     },
   ];
 
@@ -146,9 +149,12 @@ const HowItWorksPage = () => {
                 key={index}
                 className="bg-white border border-gray-200 rounded-lg shadow-md p-6 text-center"
               >
-                <div className="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="h-8 w-8 text-orange-600" />
+                <div
+                  className={`${feature.colorClass} rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}
+                >
+                  <feature.icon className="h-8 w-8" />
                 </div>
+
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">
                   {feature.title}
                 </h3>

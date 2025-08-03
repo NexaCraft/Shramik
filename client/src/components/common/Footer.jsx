@@ -64,7 +64,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/find-jobs"
+                  to="/login"
                   className="text-gray-600 hover:text-gray-900 text-sm"
                 >
                   Find Jobs
@@ -105,18 +105,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/post-job"
+                  to="/login"
                   className="text-gray-600 hover:text-gray-900 text-sm"
                 >
                   Post a Job
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/pricing"
-                  className="text-gray-600 hover:text-gray-900 text-sm"
-                >
-                  Pricing
                 </Link>
               </li>
               <li>
@@ -141,13 +133,18 @@ const Footer = () => {
                 <span>support@shramik.com</span>
               </li>
               <li className="flex items-center space-x-2 text-gray-600 text-sm">
-                <Phone className="h-4 w-4" />
-                <span>+91 9876543210</span>
+                <a
+                  href="tel:+919624342055"
+                  className="flex items-center space-x-2"
+                >
+                  <Phone className="h-4 w-4" />
+                  <span>+91 9624342055</span>
+                </a>
               </li>
               <li className="flex items-start space-x-2 text-gray-600 text-sm">
                 <MapPin className="h-4 w-4 mt-0.5" />
                 <span>
-                  Mumbai, Maharashtra
+                  Valsad, Gujarat
                   <br />
                   India
                 </span>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Briefcase,
   Users,
@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const EmployerDashboard = () => {
   const { user } = useSelector((store) => store.auth);
@@ -29,6 +30,7 @@ const EmployerDashboard = () => {
     totalApplicants: 0,
     hiredWorkers: 0,
   });
+  console.log(baseURL);
 
   // Fetch employer data and job information
   useEffect(() => {
@@ -36,29 +38,30 @@ const EmployerDashboard = () => {
       try {
         // Fetch employer profile
         const profileResponse = await axios.get(
-          `/api/employers/profile/${user.id}`
+          `http://localhost:3000/api/v1/employers/profile/${user._id}`
         );
-        setEmployerProfile(profileResponse.data);
+        const data = profileResponse?.data?.data?.employerProfile;
+        setEmployerProfile(data);
 
         // Fetch job postings
-        const jobsResponse = await axios.get(`/api/jobs/employer/${user.id}`);
+        const jobsResponse = await axios.get(`/api/jobs/employer/${user._id}`);
         setJobPostings(jobsResponse.data);
 
         // Fetch recent applicants
         const applicantsResponse = await axios.get(
-          `/api/jobs/applicants/${user.id}`
+          `/api/jobs/applicants/${user._id}`
         );
         setApplicants(applicantsResponse.data);
 
         // Fetch notifications
         const notificationsResponse = await axios.get(
-          `/api/notifications/${user.id}`
+          `/api/notifications/${user._id}`
         );
         setNotifications(notificationsResponse.data);
 
         // Fetch dashboard statistics
         const statsResponse = await axios.get(
-          `/api/employers/stats/${user.id}`
+          `/api/employers/stats/${user._id}`
         );
         setStats(statsResponse.data);
       } catch (error) {
@@ -67,7 +70,7 @@ const EmployerDashboard = () => {
     };
 
     fetchEmployerData();
-  }, [user.id]);
+  }, [user._id]);
 
   // Render job status badge
   const renderStatusBadge = (status) => {
@@ -105,7 +108,7 @@ const EmployerDashboard = () => {
               Employer Dashboard
             </h1>
             <p className="text-gray-600">
-              Welcome back, {employerProfile?.businessName || "Employer"}!
+              Welcome back, {employerProfile?.businessName}!
             </p>
           </div>
           <div className="flex space-x-4">
