@@ -75,7 +75,7 @@ const Navbar = () => {
           {/* CTA Buttons */}
           {user ? (
             <div className="hidden md:flex items-center space-x-4">
-              <Link to={`/${user?.userType}/dashboard/${user?._id}`}>
+              <Link to={`/dashboard`}>
                 <button className="flex items-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors cursor-pointer">
                   <LayoutDashboard className="h-4 w-4 mr-2" />
                   Dashboard
@@ -156,7 +156,7 @@ const Navbar = () => {
                 {user ? (
                   <>
                     <Link
-                      to={`/${user?.userType}/dashboard/${user?._id}`}
+                      to={`/dashboard`}
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <button className="w-full flex items-center justify-center px-4 py-2 border border-blue-500 text-blue-500 rounded-md hover:bg-blue-500 hover:text-white transition-colors">

@@ -87,21 +87,7 @@ const Login = () => {
         // Check if login was successful
         if (result?.success) {
           toast.success("Login successful!");
-
-          // Navigate based on user type
-          switch (formData.userType) {
-            case "worker":
-              navigate(`/worker/dashboard/${result?.user?._id}`);
-              break;
-            case "employer":
-              navigate(`/employer/dashboard/${result?.user?._id}`);
-              break;
-            case "admin":
-              navigate("/admin/dashboard");
-              break;
-            default:
-              navigate("/");
-          }
+          navigate(`/dashboard/${result?.user?._id}`);
         } else {
           // Handle unsuccessful login
           toast.error(result?.message || "Login failed");
