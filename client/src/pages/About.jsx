@@ -20,25 +20,6 @@ const AboutPage = () => {
     },
   ];
 
-  const teamMembers = [
-    {
-      name: "Ankit Sharma",
-      role: "Founder & Business Head",
-      bio: "A mechanical engineer with over 5 years of industry experience, Ankit brings strong leadership in operations, planning, and business strategy. He leads the vision and growth of the company with a focus on building meaningful impact.",
-    },
-    {
-      profile: assets.Varun_Yadav,
-      name: "Varun Yadav",
-      role: "Co-founder & Tech Lead",
-      bio: "A passionate software engineer and MERN stack developer, Varun specializes in building full-stack applications from the ground up. He is driven by a mission to create tech that solves real-world problems and improves lives.",
-    },
-    {
-      name: "Vikash Kumar",
-      role: "Technology Lead",
-      bio: "Innovative tech leader passionate about solving social challenges",
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -121,48 +102,6 @@ const AboutPage = () => {
                   {principle.title}
                 </h3>
                 <p className="text-gray-600 text-sm">{principle.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Meet Our Team
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The passionate individuals driving Shramik's mission forward
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <div
-                key={index}
-                className="bg-gray-100 rounded-lg p-6 text-center"
-              >
-                <div className="w-24 h-24 mx-auto mb-4">
-                  {member.profile ? (
-                    <img
-                      src={member.profile}
-                      alt={member.name}
-                      className="w-24 h-24 object-cover rounded-full border-2 border-orange-500 shadow-md"
-                    />
-                  ) : (
-                    <div className="bg-white rounded-full w-24 h-24 flex items-center justify-center">
-                      <Users className="h-12 w-12 text-orange-600" />
-                    </div>
-                  )}
-                </div>
-
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {member.name}
-                </h3>
-                <p className="text-sm text-gray-600 mb-3">{member.role}</p>
-                <p className="text-gray-500 text-sm">{member.bio}</p>
               </div>
             ))}
           </div>
