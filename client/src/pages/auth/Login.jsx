@@ -87,7 +87,7 @@ const Login = () => {
         // Check if login was successful
         if (result?.success) {
           toast.success("Login successful!");
-          navigate(`/dashboard/${result?.user?._id}`);
+          navigate("/dashboard");
         } else {
           // Handle unsuccessful login
           toast.error(result?.message || "Login failed");
