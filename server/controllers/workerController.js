@@ -88,3 +88,50 @@ export const searchWorkers = async (req, res) => {
       .json({ message: "Failed to search workers", error: error.message });
   }
 };
+
+// controllers/workerController.js
+
+export const addAvailability = async (req, res) => {
+  try {
+    if (req.user.role !== 'worker') {
+      return res.status(403).json({ message: 'Only workers can update availability' });
+    }
+
+    const { start, end } = req.body;
+
+    if (!start) {
+      return res.status(400).json({ message: 'Start date is required' });
+    }
+
+    const updatedWorker = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        $push: {
+          availability: {
+            start: new Date(start),
+            end: end ? new Date(end) : null,
+          },
+        },
+      },
+      { new: true, select: '-password' }
+    );
+
+    res.status(200).json(updatedWorker.availability);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to add availability', error: error.message });
+  }
+};
+
+export const getAvailability = async (req, res) => {
+  try {
+    const worker = await User.findById(req.params.id).select('availability');
+
+    if (!worker || worker.role !== 'worker') {
+      return res.status(404).json({ message: 'Worker not found' });
+    }
+
+    res.status(200).json(worker.availability);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch availability', error: error.message });
+  }
+};

@@ -37,6 +37,17 @@ const userSchema = new mongoose.Schema(
     skills: [String],
     experience: String,
     workPreference: String,
+    availability: [
+      {
+        start: {
+          type: Date,
+          required: true,
+        },
+        end: {
+          type: Date,
+        },
+      },
+    ],
 
     // Company fields
     contactName: String,
