@@ -4,67 +4,66 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:3000";
 axios.defaults.withCredentials = true;
 
-export const registerWorker = createAsyncThunk(
-  "auth/registerWorker",
+// --------------------- REGISTER ---------------------
+export const registerUser = createAsyncThunk(
+  "auth/registerUser",
   async (userData, { rejectWithValue }) => {
     try {
-      const res = await axios.post("/api/v1/auth/worker/register", userData);
-      return res?.data;
+      const res = await axios.post("/api/v1/auth/register", userData);
+      return res.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Worker registration failed"
+        error.response?.data?.message || "Registration failed"
       );
     }
   }
 );
 
-export const registerEmployer = createAsyncThunk(
-  "auth/registerEmployer",
-  async (userData, { rejectWithValue }) => {
+// --------------------- LOGIN ---------------------
+export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async ({ email, password }, { rejectWithValue }) => {
     try {
-      const res = await axios.post("/api/v1/auth/employer/register", userData);
-      return res?.data;
-    } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || "Employer registration failed"
-      );
-    }
-  }
-);
-
-export const login = createAsyncThunk(
-  "auth/login",
-  async ({ phone, password, userType }, { rejectWithValue }) => {
-    try {
-      const res = await axios.post(`/api/v1/auth/${userType}/login`, {
-        phone,
-        password,
-      });
-      return res?.data;
+      const res = await axios.post("/api/v1/auth/login", { email, password });
+      return res.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Login failed");
     }
   }
 );
 
-export const logout = createAsyncThunk(
-  "auth/logout",
+// --------------------- LOGOUT ---------------------
+export const logoutUser = createAsyncThunk(
+  "auth/logoutUser",
   async (_, { rejectWithValue }) => {
     try {
       const res = await axios.post("/api/v1/auth/logout");
-      console.log(res)
-      return res?.data;
+      return res.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Logout failed");
     }
   }
 );
 
+// --------------------- GET CURRENT USER ---------------------
+export const fetchCurrentUser = createAsyncThunk(
+  "auth/fetchCurrentUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get("/api/v1/auth/me");
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Fetch failed");
+    }
+  }
+);
+
+// --------------------- SLICE ---------------------
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
-    userType: null,
+    userType: null, // worker / company / admin
     isAuthenticated: false,
     isLoading: false,
     error: null,
@@ -75,48 +74,63 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Registration Reducers
     builder
-      .addCase(registerWorker.pending, (state) => {
+      // Register
+      .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(registerWorker.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload.user;
-        state.userType = "worker";
-        state.isAuthenticated = true;
-      })
-      .addCase(registerWorker.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
-      .addCase(registerEmployer.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(registerEmployer.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload.user;
-        state.userType = "employer";
-        state.isAuthenticated = true;
-      })
-      .addCase(registerEmployer.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
         state.userType = action.payload.user.role;
         state.isAuthenticated = true;
       })
-      .addCase(logout.fulfilled, (state) => {
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Login
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.userType = action.payload.user.role;
+        state.isAuthenticated = true;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Logout
+      .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
         state.userType = null;
         state.isAuthenticated = false;
+      })
+
+      // Fetch Current User
+      .addCase(fetchCurrentUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.userType = action.payload.user.role;
+        state.isAuthenticated = true;
+      })
+      .addCase(fetchCurrentUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.userType = null;
+        state.isAuthenticated = false;
+        state.error = action.payload;
       });
   },
 });

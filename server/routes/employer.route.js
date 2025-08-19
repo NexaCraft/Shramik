@@ -5,7 +5,7 @@ import {
   updateEmployerProfile,
   searchEmployers,
 } from "../controllers/employerController.js";
-import { protect } from "../middlewares/authMiddleware.js";
+import { protect, authorize } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 

@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { LogIn, User, Lock, Eye, EyeOff } from "lucide-react";
-import { login } from "../../redux/features/auth/‎authSlice";
+import { loginUser } from "../../redux/features/auth/‎authSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -20,87 +20,61 @@ const Login = () => {
 
   const validateForm = () => {
     const newErrors = {};
-
-    // Validate phone number
     const phoneRegex = /^[6-9]\d{9}$/;
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (!phoneRegex.test(formData.phone)) {
-      newErrors.phone = "Invalid phone number";
-    }
-
-    // Validate password
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    } else if (!passwordRegex.test(formData.password)) {
+
+    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+    else if (!phoneRegex.test(formData.phone))
+      newErrors.phone = "Invalid phone number";
+
+    if (!formData.password) newErrors.password = "Password is required";
+    else if (!passwordRegex.test(formData.password))
       newErrors.password =
         "Password must be 8+ chars, include uppercase, lowercase, number, special char";
-    }
 
-    // Validate user type
-    if (!formData.userType) {
-      newErrors.userType = "Please select a user type";
-    }
+    if (!formData.userType) newErrors.userType = "Please select a user type";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear specific field error when user starts typing
     if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: undefined,
-      }));
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Reset errors
     setErrors({});
 
-    // Validate form
-    if (validateForm()) {
-      try {
-        setIsLoading(true);
-
-        // Dispatch login action
-        const result = await dispatch(
-          login({
-            phone: formData.phone,
-            password: formData.password,
-            userType: formData.userType,
-          })
-        ).unwrap();
-
-        // Check if login was successful
-        if (result?.success) {
-          toast.success("Login successful!");
-          navigate("/dashboard");
-        } else {
-          // Handle unsuccessful login
-          toast.error(result?.message || "Login failed");
-        }
-      } catch (error) {
-        // Handle any errors from the login process
-        toast.error(error?.message || "Login failed");
-        console.error("Login error:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
+    if (!validateForm()) {
       toast.error("Please fix the form errors");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const result = await dispatch(loginUser(formData)).unwrap();
+
+      // Login successful
+      if (result?.user) {
+        toast.success("Login successful!");
+        navigate("/dashboard");
+      } else {
+        toast.error(result?.message || "Login failed");
+      }
+    } catch (error) {
+      toast.error(error?.message || "Login failed");
+      console.error("Login error:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

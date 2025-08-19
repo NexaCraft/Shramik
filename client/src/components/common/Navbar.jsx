@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import toast from "react-hot-toast";
-import { logout } from "../../redux/features/auth/‎authSlice";
+import { logoutUser } from "../../redux/features/auth/‎authSlice";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +21,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     try {
-      dispatch(logout());
+      dispatch(logoutUser());
       toast.success("Logged out successfully");
       navigate("/");
       setIsMenuOpen(false);
