@@ -1,22 +1,20 @@
-import express from "express";
-import { getDashboardData } from "../controllers/workerController.js";
+import express from 'express';
 import {
-  verifyToken,
-  authorize,
-  rateLimiter,
-} from "../middleware/authMiddleware.js";
+  getAllWorkers,
+  getWorkerProfile,
+  updateWorkerProfile,
+  searchWorkers,
+} from '../controllers/workerController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Apply middleware to all routes
-router.use(verifyToken);
-router.use(authorize(["worker"]));
-router.use(rateLimiter);
+// Public or restricted routes
+router.get('/', protect, getAllWorkers); // For admins/companies
+router.get('/search', searchWorkers);
+router.get('/:id', getWorkerProfile);
 
-// Dashboard routes
-router.get("/profile/:id", getDashboardData);
-// router.put('/profile', updateWorkerProfile);
-// router.get('/job-applications', getJobApplications);
-// router.patch('/notifications/:notificationId/read', markNotificationAsRead);
+// Protected route for logged-in worker
+router.put('/me', protect, updateWorkerProfile);
 
 export default router;

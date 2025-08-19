@@ -1,36 +1,21 @@
-import express from "express";
 import dotenv from "dotenv";
-import cors from "cors";
-import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db.js";
-
-// Routes
-import authRoutes from "./routes/auth.route.js";
-import workerRoutes from "./routes/worker.route.js";
-import employersRoutes from "./routes/employer.route.js";
+import app from "./app.js";
 
 dotenv.config();
 
-const app = express();
+const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  })
-);
-app.use(express.json());
-app.use(cookieParser());
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`🚀 Server is running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error.message);
+    process.exit(1);
+  }
+};
 
-connectDB();
-
-// APIs
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/workers", workerRoutes);
-app.use("/api/v1/employers", employersRoutes);
-
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log(`Server is Running on port: ${port}`);
-});
+startServer();

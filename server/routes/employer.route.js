@@ -1,25 +1,17 @@
 import express from "express";
-import { getDashboardData } from "../controllers/employerController.js";
 import {
-  verifyToken,
-  authorize,
-  rateLimiter,
-} from "../middleware/authMiddleware.js";
+  getAllEmployers,
+  getEmployerById,
+  updateEmployerProfile,
+  searchEmployers,
+} from "../controllers/employerController.js";
+import { protect } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-// Apply middleware to all routes
-router.use(verifyToken);
-router.use(authorize(["employer"]));
-router.use(rateLimiter);
-
-// Dashboard routes
-router.get("/profile/:id", getDashboardData);
-// router.post("/jobs", createJobPosting);
-// router.get("/job-applications", getJobApplications);
-// router.patch(
-//   "/job-applications/:applicationId/status",
-//   updateJobApplicationStatus
-// );
+router.get("/", protect, getAllEmployers); // Optionally restrict to admin
+router.get("/search", searchEmployers);
+router.get("/:id", getEmployerById);
+router.put("/me", protect, authorize("company"), updateEmployerProfile);
 
 export default router;

@@ -1,106 +1,86 @@
 import bcrypt from "bcryptjs";
-import Worker from "../models/worker.model.js";
-import Employer from "../models/employer.model.js";
-import Admin from "../models/admin.model.js";
+import User from "../models/user.model.js";
 import { generateToken } from "../utils/generateToken.js";
 
-// Cookie options for secure token storage
-const cookieOptions = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
-  maxAge: process.env.COOKIE_MAX_AGE,
-};
-
-export const registerUser = async (Model, req, res) => {
+// @desc    Register a new user
+// @route   POST /api/v1/auth/register
+export const register = async (req, res, next) => {
   try {
-    const { phone, password, ...userData } = req.body;
+    const { email, password, role } = req.body;
 
-    const existingUser = await Model.findOne({ phone });
-    if (existingUser) {
-      return res.status(400).json({
-        success: false,
-        message: "User already exists",
-      });
+    if (!email || !password || !role) {
+      return res
+        .status(400)
+        .json({ message: "Email, password, and role are required." });
     }
 
-    const salt = parseInt(process.env.PASSWORD_SALT_ROUNDS, 10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const userExists = await User.findOne({ email });
+    if (userExists)
+      return res
+        .status(400)
+        .json({ message: "User already exists for this emial ID." });
 
-    const newUser = new Model({
-      ...userData,
-      phone,
-      password: hashedPassword,
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({ ...req.body, password: hashedPassword });
+
+    const token = generateToken(user);
+    res.cookie("token", token, { httpOnly: true });
+
+    res.status(201).json({
+      message: "User registered",
+      user: { id: user._id, email: user.email, role: user.role },
     });
-    await newUser.save();
-
-    const token = generateToken(newUser._id, Model.modelName.toLowerCase());
-
-    res.cookie("token", token, cookieOptions);
-
-    return res.status(201).json({
-      success: true,
-      message: "Registration successful",
-      user: newUser,
-    });
-  } catch (error) {
-    console.error("Registration error:", error);
-    res.status(500).json({
-      success: false,
-      message: "Server registration error",
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
-export const loginUser = async (Model, req, res) => {
+// @desc    Login user
+// @route   POST /api/v1/auth/login
+export const login = async (req, res, next) => {
   try {
-    const { phone, password } = req.body;
+    const { email, password } = req.body;
+    if (!email || !password)
+      return res
+        .status(400)
+        .json({ message: "Email and password are required." });
 
-    const user = await Model.findOne({ phone });
-    if (!user) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid credentials",
-      });
-    }
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid credentials",
-      });
-    }
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = generateToken(user._id, Model.modelName.toLowerCase());
-    res.cookie("token", token, cookieOptions);
+    const token = generateToken(user);
+    res.cookie("token", token, { httpOnly: true });
 
-    return res.status(200).json({
-      success: true,
+    res.status(200).json({
       message: "Login successful",
-      user: user,
+      user: { id: user._id, email: user.email, role: user.role },
     });
-  } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({
-      success: false,
-      message: "Server login error",
-    });
+  } catch (err) {
+    next(err);
   }
 };
 
-// Specific registration and login methods
-export const registerWorker = (req, res) => registerUser(Worker, req, res);
-export const loginWorker = (req, res) => loginUser(Worker, req, res);
-export const registerEmployer = (req, res) => registerUser(Employer, req, res);
-export const loginEmployer = (req, res) => loginUser(Employer, req, res);
-export const registerAdmin = (req, res) => registerUser(Admin, req, res);
-export const loginAdmin = (req, res) => loginUser(Admin, req, res);
+// @desc    Logout user
+// @route   POST /api/v1/auth/logout
+export const logout = (_, res) => {
+  res.clearCookie("token");
+  res.status(200).json({ message: "Logged out" });
+};
 
-export const logout = (req, res) => {
-  res.clearCookie("token", cookieOptions);
-  res.status(200).json({
-    success: true,
-    message: "Logged out successfully",
-  });
+// @desc    Get current logged in user
+// @route   GET /api/v1/auth/me
+export const getMe = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
 };
